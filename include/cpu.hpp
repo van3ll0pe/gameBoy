@@ -56,7 +56,7 @@ namespace GB
             uint8_t opcode;
             void fetch_opcode();
 
-            //##### OPCODES ARITHMETIC #####
+            //##### OPCODES ARITHMETIC 8bits #####
             void ADD(uint8_t rn);
             void ADD(uint16_t HL);
             void ADC(uint8_t rn);
@@ -83,6 +83,14 @@ namespace GB
 
             void DAA();
             void CPL();
+
+            //##### OPCODES ARITHMETIC 16bits #####
+            void ADD_16b(uint16_t rr);
+            uint16_t INC_16b(uint16_t rr);
+            uint16_t DEC_16b(uint16_t rr);
+            void ADD_SPe(int8_t n);
+            void LD_HLSPe(int8_t n);
+
 
     };
 }
