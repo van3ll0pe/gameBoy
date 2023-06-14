@@ -91,6 +91,16 @@ namespace GB
             void ADD_SPe(int8_t n);
             void LD_HLSPe(int8_t n);
 
+            //###### OPCODES LOAD 8bits #####
+            void LD(uint8_t &r, uint8_t rn);    //LD r, r | LD r, n
+            void LD(uint8_t &r, uint16_t rr);   //LD r, (HL) | LD A (BC) | LD A (DE) | LD A (nn)
+            void LD(uint16_t rr, uint8_t rn);   //LD (HL), r | LD (HL), n | LD (BC), A | LD (DE), A | LD (nn), A
+            void LD_RIO(uint8_t rn); //LD A, (FF00 + n) | LD A, (FF00 + C)
+            void LD_WIO(uint8_t rn); //LD (FF00 + n), A | LD (FF00 + C), A
+            //LDI A, (HL) -> LD A, (HL); INC HL
+            //LDI (HL), A -> LD (HL), A; INC HL
+            //LDD A, (HL) -> LD A, (HL); DEC HL
+            //LDD (HL), A -> LD (HL), A; DEC HL
 
     };
 }
