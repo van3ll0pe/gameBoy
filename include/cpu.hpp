@@ -9,7 +9,7 @@
 #include "component.hpp"
 
 #define ZERO_FLAG       0b10000000
-#define NEGATIVE_FLAG   0b01000000
+#define SUBSTRACT_FLAG   0b01000000
 #define HALF_CARRY_FLAG 0b00100000
 #define CARRY_FLAG      0b00010000
 
@@ -56,11 +56,33 @@ namespace GB
             uint8_t opcode;
             void fetch_opcode();
 
-            //##### OPCODES LOAD #####
-            void LD(uint8_t &registre_dst, uint8_t registre_src); //LD r, r
-            void LD(uint8_t &registre_dst); //LD r, (HL)
-            void LD(uint8_t)
+            //##### OPCODES ARITHMETIC #####
+            void ADD(uint8_t rn);
+            void ADD(uint16_t HL);
+            void ADC(uint8_t rn);
+            void ADC(uint16_t HL);
 
+            void SUB(uint8_t rn);
+            void SUB(uint16_t HL);
+            void SBC(uint8_t rn);
+            void SBC(uint16_t HL);
+            void CP(uint8_t rn);
+            void CP(uint16_t HL);
+
+            void AND(uint8_t rn);
+            void AND(uint16_t HL);
+            void XOR(uint8_t rn);
+            void XOR(uint16_t HL);
+            void OR(uint8_t rn);
+            void OR(uint16_t HL);
+
+            void INC(uint8_t &r);
+            void INC(uint16_t HL);
+            void DEC(uint8_t &r);
+            void DEC(uint16_t HL);
+
+            void DAA();
+            void CPL();
 
     };
 }
