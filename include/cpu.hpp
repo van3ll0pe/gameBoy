@@ -143,6 +143,14 @@ namespace GB
             void SRL(uint8_t &r);
             void SRL(uint16_t HL);
 
+            //##### OPCODES BIT OPERATION #####
+            void BIT(uint8_t b, uint8_t r);     //register not changed (no reference)
+            void BIT(uint8_t b, uint16_t HL);
+            void SET(uint8_t b, uint8_t &r);    //register modified (reference needed)
+            void SET(uint8_t b, uint16_t HL);
+            void RES(uint8_t b, uint8_t &r);    //register modified (reference needed)
+            void RES(uint8_t b, uint16_t HL);
+
 
 
     };
