@@ -151,6 +151,20 @@ namespace GB
             void RES(uint8_t b, uint8_t &r);    //register modified (reference needed)
             void RES(uint8_t b, uint16_t HL);
 
+            //##### OPCODES JUMP #####
+            void JP(uint16_t nn);
+            void JP();              //JP HL
+            void JP(bool condition, uint16_t nn); //conditionnal JP
+            void JR(int8_t d);
+            void JR(bool condition, int8_t d);
+            void CALL(uint16_t nn);
+            void CALL(bool condition, uint16_t nn);
+            void RET();
+            void RET(bool condition);
+            void RETI();
+            void RST(uint8_t n);
+
+
 
 
     };
