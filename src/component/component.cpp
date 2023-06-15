@@ -20,6 +20,7 @@ namespace GB
     {
         if (bus == nullptr) {
             this->connected = false;
+            throw new std::runtime_error("[Error] - Component failed to connect the bus\n");
         }
         else {
             this->bus = bus;

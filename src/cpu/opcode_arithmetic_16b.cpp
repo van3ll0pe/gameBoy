@@ -21,16 +21,38 @@ namespace GB
         check_flag(CARRY_FLAG, (res & 0x10000));
     }
 
-    uint16_t
-    Cpu::INC_16b(uint16_t rr)
+    void
+    Cpu::INC_16b(uint16_t &rr)
     {
-        return rr + 1;
+        rr += 1;
     }
 
-    uint16_t
-    Cpu::DEC_16b(uint16_t rr)
+    void
+    Cpu::INC_16b(uint8_t &hr, uint8_t &lr)
     {
-        return rr - 1;
+        uint16_t rr = (hr << 8) + lr;
+
+        rr += 1;
+
+        hr = (rr & 0xFF00) >> 8;
+        lr = (rr & 0x00FF);
+    }
+
+    void
+    Cpu::DEC_16b(uint16_t &rr)
+    {
+        rr -= 1;
+    }
+
+    void
+    Cpu::DEC_16b(uint8_t &hr, uint8_t &lr)
+    {
+        uint16_t rr = (hr << 8) + lr;
+
+        rr -= 1;
+
+        hr = (rr & 0xFF00) >> 8;
+        lr = (rr & 0x00FF);
     }
 
     void

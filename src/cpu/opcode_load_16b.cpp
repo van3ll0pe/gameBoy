@@ -35,11 +35,11 @@ namespace GB
     }
 
     void
-    Cpu::POP(uint8_t &rh, uint8_t &rl)
+    Cpu::POP(uint8_t &hr, uint8_t &lr)
     {
         uint16_t rr = pull_16b();
 
-        rh = (rr & 0xFF00) >> 8;
-        rl = (rr & 0x00FF); 
+        hr = (rr & 0xFF00) >> 8;
+        lr = (rr & 0x00FF); 
     }
 }
