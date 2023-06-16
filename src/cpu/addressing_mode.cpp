@@ -2,12 +2,6 @@
 
 namespace GB
 {
-    void
-    Cpu::IMPLIED()
-    {
-        return ;
-    }
-
     uint8_t
     Cpu::IMMEDIATE_8b()
     {

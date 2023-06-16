@@ -22,6 +22,11 @@
 #define BIT_1 0b00000010
 #define BIT_0 0b00000001
 
+#define CONDITION_Z   (get_flag(ZERO_FLAG) == 1)
+#define CONDITION_NZ  (get_flag(ZERO_FLAG) == 0)
+#define CONDITION_C   (get_flag(CARRY_FLAG) == 1)
+#define CONDITION_NC  (get_flag(CARRY_FLAG) == 0)
+
 
 namespace GB
 {
@@ -65,9 +70,10 @@ namespace GB
 
             uint8_t opcode;
             void fetch_opcode();
+            void execute_opcode();
+            void execute_opcode_CB();
 
             //##### ADDRESSING MODE #####
-            void IMPLIED();
             uint8_t IMMEDIATE_8b(); //get the immediate value at PC address
             uint16_t IMMEDIATE_16b(); //get the immediate value at PC address
 
