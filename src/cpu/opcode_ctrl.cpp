@@ -40,12 +40,12 @@ namespace GB
     void
     Cpu::STOP()
     {
-
+        this->stopped = 1;
     }
 
     void
     Cpu::HALT()
     {
-        
+        this->halted = 1;
     }
 }

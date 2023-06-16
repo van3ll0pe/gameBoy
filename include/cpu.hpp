@@ -46,7 +46,8 @@ namespace GB
             uint16_t PC;
 
             uint8_t IME;
-
+            uint8_t stopped; //if the instruction is STOP, set to 1
+            uint8_t halted; //if the instruction is HALT, set to 1
 
             uint8_t cycles;
         
@@ -64,6 +65,11 @@ namespace GB
 
             uint8_t opcode;
             void fetch_opcode();
+
+            //##### ADDRESSING MODE #####
+            void IMPLIED();
+            uint8_t IMMEDIATE_8b(); //get the immediate value at PC address
+            uint16_t IMMEDIATE_16b(); //get the immediate value at PC address
 
             //##### OPCODES ARITHMETIC 8bits #####
             void ADD(uint8_t rn);
