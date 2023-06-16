@@ -164,6 +164,15 @@ namespace GB
             void RETI();
             void RST(uint8_t n);
 
+            //##### OPCODES CONTROL #####
+            void CCF();
+            void SCF();
+            void NOP();
+            void HALT();
+            void STOP();
+            void DI();
+            void EI(); 
+
 
 
 
