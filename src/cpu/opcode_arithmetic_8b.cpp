@@ -259,7 +259,6 @@ namespace GB
     void
     Cpu::DAA()
     {
-
         if (get_flag(SUBSTRACT_FLAG) == 0) { //if the last operation was addition
 
             if (((this->A & 0xF) > 0x9) || get_flag(HALF_CARRY_FLAG)) //if the 4 lower bits isn't BCD or if HALF CARRY flag is SET
@@ -269,10 +268,11 @@ namespace GB
             { 
                 this->A += 0x60;
                 set_flag(CARRY_FLAG);
-            } else
-            {
-                clear_flag(CARRY_FLAG);
             }
+            /* NO USEFUL BECAUSE 4 high bits is BCD and CARRY FLAG is already 0, if it's 0, no need to put a 0
+            else
+                clear_flag(CARRY_FLAG);
+            */
             
         }
         else { //if the last operation was substraction
@@ -281,13 +281,7 @@ namespace GB
                 this->A -= 0x06;
             
             if (((this->A & 0xF0) > 0x90) || get_flag(CARRY_FLAG))  //if the 4 upper bits isn't BCD or CARRY flag is SET
-            {
                 this->A -= 0x60;
-                set_flag(CARRY_FLAG);
-            } else
-            {
-                clear_flag(CARRY_FLAG);
-            }
         }
 
 
