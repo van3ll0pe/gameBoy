@@ -276,15 +276,49 @@ namespace GB
                         this->cycles = 4;
                         break;
 
-            case 0x30:
-            case 0x31:
-            case 0x32:
-            case 0x33:
-            case 0x34:
-            case 0x35:
-            case 0x36:
-            case 0x37:
-            case 0x38:
+            case 0x30:  //JR NC, e8
+                        this->cycles = 8;
+                        JR(CONDITION_NC, IMMEDIATE_8b());
+                        break;
+
+            case 0x31:  //LD SP, n16
+                        LD(this->SP, IMMEDIATE_16b());
+                        this->cycles = 12;
+                        break;
+
+            case 0x32:  //LD (HL-), A
+                        LD((uint16_t)((this->H << 8) + this->L), this->A);
+                        DEC_16b(this->H, this->L);
+                        this->cycles = 8;
+                        break;
+
+            case 0x33:  //INC SP
+                        INC_16b(this->SP);
+                        this->cycles = 8;
+                        break;
+
+            case 0x34:  //INC (HL)
+                        INC((uint16_t)((this->H << 8) + this->L));
+                        this->cycles = 12;
+                        break;
+
+            case 0x35:  //DEC (HL)
+                        DEC((uint16_t)((this->H << 8) + this->L));
+                        this->cycles = 12;
+                        break;
+
+            case 0x36:  //LD (HL), n8
+                        LD((uint16_t)((this->H << 8) + this->L), IMMEDIATE_8b());
+                        this->cycles = 12;
+                        break;
+
+            case 0x37:  //SCF
+                        SCF();
+                        this->cycles = 4;
+                        break;
+
+            case 0x38:  //JR C, e8
+                        JR(CONDITION_C, )
             case 0x39:
             case 0x3A:
             case 0x3B:

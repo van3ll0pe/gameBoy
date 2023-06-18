@@ -126,10 +126,9 @@ namespace GB
             //LDD (HL), A -> LD (HL), A; DEC HL
 
             //##### OPCODES LOAD 16bits #####
-            void LD_SP(uint16_t n);                            //LD SP, nn
             void LD(uint8_t &hr, uint8_t &lr, uint16_t n);  //LD BC, nn | LD DE, nn | LD HL, nn
             void LD_a16(uint16_t a16);                      //LD (a16), SP
-            void LD(uint16_t &rr, uint16_t rn);             //LD SP, HL
+            void LD(uint16_t &rr, uint16_t rn);             //LD SP, HL | LD SP, n16
             void PUSH(uint16_t rr);             //PUSH((A << 8) + F) -> PUSH AF, etc
             void POP(uint8_t &hr, uint8_t &lr); //POP(A, F) -> pop AF, etc
 

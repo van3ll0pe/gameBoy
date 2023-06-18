@@ -3,12 +3,6 @@
 namespace GB
 {
     void
-    Cpu::LD_SP(uint16_t n)
-    {
-        this->SP = n;
-    }
-
-    void
     Cpu::LD(uint8_t &hr, uint8_t &lr, uint16_t n)
     {
         hr = (n & 0xFF00) >> 8;
