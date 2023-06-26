@@ -318,67 +318,288 @@ namespace GB
                         break;
 
             case 0x38:  //JR C, e8
-                        JR(CONDITION_C, )
-            case 0x39:
-            case 0x3A:
-            case 0x3B:
-            case 0x3C:
-            case 0x3D:
-            case 0x3E:
-            case 0x3F:
+                        this->cycles = 8;
+                        JR(CONDITION_C, IMMEDIATE_8b());
+                        break;
 
-            case 0x40:
-            case 0x41:
-            case 0x42:
-            case 0x43:
-            case 0x44:
-            case 0x45:
-            case 0x46:
-            case 0x47:
-            case 0x48:
-            case 0x49:
-            case 0x4A:
-            case 0x4B:
-            case 0x4C:
-            case 0x4D:
-            case 0x4E:
-            case 0x4F:
+            case 0x39:  //ADD HL, SP
+                        ADD_16b(this->SP);
+                        this->cycles = 8;
+                        break;
 
-            case 0x50:
-            case 0x51:
-            case 0x52:
-            case 0x53:
-            case 0x54:
-            case 0x55:
-            case 0x56:
-            case 0x57:
-            case 0x58:
-            case 0x59:
-            case 0x5A:
-            case 0x5B:
-            case 0x5C:
-            case 0x5D:
-            case 0x5E:
-            case 0x5F:
+            case 0x3A:  //LD A, (HL-)
+                        LD(this->A, (uint16_t)((this->H << 8) + this->L));
+                        DEC_16b(this->H, this->L);
+                        this->cycles = 8;
+                        break;
 
-            case 0x60:
-            case 0x61:
-            case 0x62:
-            case 0x63:
-            case 0x64:
-            case 0x65:
-            case 0x66:
-            case 0x67:
-            case 0x68:
-            case 0x69:
-            case 0x6A:
-            case 0x6B:
-            case 0x6C:
-            case 0x6D:
-            case 0x6E:
-            case 0x6F:
+            case 0x3B:  //DEC SP
+                        DEC_16b(this->SP);
+                        this->cycles = 8;
+                        break;
 
-            case 0x70:
+            case 0x3C:  //INC A
+                        INC(this->A);
+                        this->cycles = 4;
+                        break;
+
+            case 0x3D:  //DEC A
+                        DEC(this->A);
+                        this->cycles = 4;
+                        break;
+
+            case 0x3E:  //LD A, n8
+                        LD(this->A, IMMEDIATE_8b());
+                        this->cycles = 8;
+                        break;
+
+            case 0x3F:  //CCF
+                        CCF();
+                        this->cycles = 4;
+                        break;
+
+            case 0x40:  //LD B, B
+                        LD(this->B, this->B);
+                        this->cycles = 4;
+                        break;
+
+            case 0x41:  //LD B, C
+                        LD(this->B, this->C);
+                        this->cycles = 4;
+                        break;
+
+            case 0x42:  //LD B, D
+                        LD(this->B, this->D);
+                        this->cycles = 4;
+                        break;
+
+            case 0x43:  //LD B, E
+                        LD(this->B, this->E);
+                        this->cycles = 4;
+                        break;
+
+            case 0x44:  //LD B, H
+                        LD(this->B, this->H);
+                        this->cycles = 4;
+                        break;
+
+            case 0x45:  //LD B, L
+                        LD(this->B, this->L);
+                        this->cycles = 4;
+                        break;
+
+            case 0x46:  //LD B, (HL)
+                        LD(this->B, (uint16_t)((this->H << 8) + this->L));
+                        this->cycles = 8;
+                        break;
+
+            case 0x47:  //LD B, A
+                        LD(this->B, this->A);
+                        this->cycles = 4;
+                        break;
+
+            case 0x48:  //LD C, B
+                        LD(this->C, this->B);
+                        this->cycles = 4;
+                        break;
+
+            case 0x49:  //LD C, C
+                        LD(this->C, this->C);
+                        this->cycles = 4;
+                        break;
+
+            case 0x4A:  //LD C, D
+                        LD(this->C, this->D);
+                        this->cycles = 4;
+                        break;
+
+            case 0x4B:  //LD C, E
+                        LD(this->C, this->E);
+                        this->cycles = 4;
+                        break;
+
+            case 0x4C:  //LD C, H
+                        LD(this->C, this->H);
+                        this->cycles = 4;
+                        break;
+
+            case 0x4D:  //LD C, L
+                        LD(this->C, this->L);
+                        this->cycles = 4;
+                        break;
+
+            case 0x4E:  //LD C, (HL)
+                        LD(this->C, (uint16_t)((this->H << 8) + this->L));
+                        this->cycles = 8;
+                        break;
+
+            case 0x4F:  //LD C, A
+                        LD(this->C, this->A);
+                        this->cycles = 4;
+                        break;
+
+            case 0x50:  //LD D, B
+                        LD(this->D, this->B);
+                        this->cycles = 4;
+                        break;
+
+            case 0x51:  //LD D, C
+                        LD(this->D, this->C);
+                        this->cycles = 4;
+                        break;
+
+            case 0x52:  //LD D, D
+                        LD(this->D, this->D);
+                        this->cycles = 4;
+                        break;
+
+            case 0x53:  //LD D, E
+                        LD(this->D, this->E);
+                        this->cycles = 4;
+                        break;
+
+            case 0x54:  //LD D, H
+                        LD(this->D, this->H);
+                        this->cycles = 4;
+                        break;
+
+            case 0x55:  //LD D, L
+                        LD(this->D, this->L);
+                        this->cycles = 4;
+                        break;
+
+            case 0x56:  //LD D, (HL)
+                        LD(this->D, (uint16_t)((this->H << 8) + this->L));
+                        this->cycles = 8;
+                        break;
+
+            case 0x57:  //LD D, A
+                        LD(this->D, this->A);
+                        this->cycles = 4;
+                        break;
+
+            case 0x58:  //LD E, B
+                        LD(this->E, this->B);
+                        this->cycles = 4;
+                        break;
+
+            case 0x59:  //LD E, C
+                        LD(this->E, this->C);
+                        this->cycles = 4;
+                        break;
+
+            case 0x5A:  //LD E, D
+                        LD(this->E, this->D);
+                        this->cycles = 4;
+                        break;
+
+            case 0x5B:  //LD E, E
+                        LD(this->E, this->E);
+                        this->cycles = 4;
+                        break;
+
+            case 0x5C:  //LD E, H
+                        LD(this->E, this->H);
+                        this->cycles = 4;
+                        break;
+
+            case 0x5D:  //LD E, L
+                        LD(this->E, this->L);
+                        this->cycles = 4;
+                        break;
+
+            case 0x5E:  //LD E, (HL)
+                        LD(this->E, (uint16_t)((this->H << 8) + this->L));
+                        this->cycles = 8;
+                        break;
+
+            case 0x5F:  //LD E, A
+                        LD(this->E, this->A);
+                        this->cycles = 4;
+                        break;
+
+            case 0x60:  //LD H, B
+                        LD(this->H, this->B);
+                        this->cycles = 4;
+                        break;
+
+            case 0x61:  //LD H, C
+                        LD(this->H, this->C);
+                        this->cycles = 4;
+                        break;
+
+            case 0x62:  //LD H, D
+                        LD(this->H, this->D);
+                        this->cycles = 4;
+                        break;
+
+            case 0x63:  //LD H, E
+                        LD(this->H, this->E);
+                        this->cycles = 4;
+                        break;
+
+            case 0x64:  //LD H, H
+                        LD(this->H, this->H);
+                        this->cycles = 4;
+                        break;
+
+            case 0x65:  //LD H, L
+                        LD(this->H, this->L);
+                        this->cycles = 4;
+                        break;
+
+            case 0x66:  //LD H, (HL)
+                        LD(this->H, (uint16_t)((this->H << 8) + this->L));
+                        this->cycles = 8;
+                        break;
+
+            case 0x67:  //LD H, A
+                        LD(this->H, this->A);
+                        this->cycles = 4;
+                        break;
+
+            case 0x68:  //LD L, B
+                        LD(this->L, this->B);
+                        this->cycles = 4;
+                        break;
+
+            case 0x69:  //LD L, C
+                        LD(this->L, this->C);
+                        this->cycles = 4;
+                        break;
+
+            case 0x6A:  //LD L, D
+                        LD(this->L, this->D);
+                        this->cycles = 4;
+                        break;
+
+            case 0x6B:  //LD L, E
+                        LD(this->L, this->E);
+                        this->cycles = 4;
+                        break;
+
+            case 0x6C:  //LD L, H
+                        LD(this->L, this->H);
+                        this->cycles = 4;
+                        break;
+
+            case 0x6D:  //LD L, L
+                        LD(this->L, this->L);
+                        this->cycles = 4;
+                        break;
+
+            case 0x6E:  //LD L, (HL)
+                        LD(this->L, (uint16_t)((this->H << 8) + this->L));
+                        this->cycles = 8;
+                        break;
+
+            case 0x6F:  //LD L, A
+                        LD(this->L, this->A);
+                        this->cycles = 4;
+                        break;
+
+            case 0x70:  //LD (HL), B
+                        
             case 0x71:
             case 0x72:
             case 0x73:
