@@ -599,124 +599,549 @@ namespace GB
                         break;
 
             case 0x70:  //LD (HL), B
+                        LD((uint16_t)((this->H << 8) + this->L), this->B);
+                        this->cycles = 8;
+                        break;
+
+            case 0x71:  //LD (HL), C
+                        LD((uint16_t)((this->H << 8) + this->L), this->C);
+                        this->cycles = 8;
+                        break;
+
+            case 0x72:  //LD (HL), D
+                        LD((uint16_t)((this->H << 8) + this->L), this->D);
+                        this->cycles = 8;
+                        break;
+
+            case 0x73:  //LD (HL), E
+                        LD((uint16_t)((this->H << 8) + this->L), this->E);
+                        this->cycles = 8;
+                        break;
+
+            case 0x74:  //LD (HL), H
+                        LD((uint16_t)((this->H << 8) + this->L), this->H);
+                        this->cycles = 8;
+                        break;
+
+            case 0x75:  //LD (HL), L
+                        LD((uint16_t)((this->H << 8) + this->L), this->L);
+                        this->cycles = 8;
+                        break;
+
+            case 0x76:  //HALT
+                        HALT();
+                        this->cycles = 4;
+                        break;
+
+            case 0x77:  //LD (HL), A
+                        LD((uint16_t)((this->H << 8) + this->L), this->A);
+                        this->cycles = 8;
+                        break;
+
+            case 0x78:  //LD A, B
+                        LD(this->A, this->B);
+                        this->cycles = 4;
+                        break;
+
+            case 0x79:  //LD A, C
+                        LD(this->A, this->C);
+                        this->cycles = 4;
+                        break;
+
+            case 0x7A:  //LD A, D
+                        LD(this->A, this->D);
+                        this->cycles = 4;
+                        break;
+
+            case 0x7B:  //LD A, E
+                        LD(this->A, this->E);
+                        this->cycles = 4;
+                        break;
+
+            case 0x7C:  //LD A, H
+                        LD(this->A, this->H);
+                        this->cycles = 4;
+                        break;
+
+            case 0x7D:  //LD A, L
+                        LD(this->A, this->L);
+                        this->cycles = 4;
+                        break;
+
+            case 0x7E:  //LD A, (HL)
+                        LD(this->A, (uint16_t)((this->H << 8) + this->L));
+                        this->cycles = 8;
+                        break;
+
+            case 0x7F:  //LD A, A
+                        LD(this->A, this->A);
+                        this->cycles = 4;
+                        break;
+
+            case 0x80:  //ADD A, B
+                        ADD(this->B);
+                        this->cycles = 4;
+                        break;
+
+            case 0x81:  //ADD A, C
+                        ADD(this->C);
+                        this->cycles = 4;
+                        break;
+
+            case 0x82:  //ADD A, D
+                        ADD(this->D);
+                        this->cycles = 4;
+                        break;
+
+            case 0x83:  //ADD A, E
+                        ADD(this->E);
+                        this->cycles = 4;
+                        break;
+
+            case 0x84:  //ADD A, H
+                        ADD(this->H);
+                        this->cycles = 4;
+                        break;
+
+            case 0x85:  //ADD A, L
+                        ADD(this->L);
+                        this->cycles = 4;
+                        break;
+
+            case 0x86:  //ADD A, (HL)
+                        ADD((uint16_t)((this->H << 8) + this->L));
+                        this->cycles = 8;
+                        break;
+
+            case 0x87:  //ADD A, A
+                        ADD(this->A);
+                        this->cycles = 4;
+                        break;
+
+            case 0x88:  //ADC A, B
+                        ADC(this->B);
+                        this->cycles = 4;
+                        break;
+
+            case 0x89:  //ADC A, C
+                        ADC(this->C);
+                        this->cycles = 4;
+                        break;
+
+            case 0x8A:  //ADC A, D
+                        ADC(this->D);
+                        this->cycles = 4;
+                        break;
+
+            case 0x8B:  //ADC A, E
+                        ADC(this->E);
+                        this->cycles = 4;
+                        break;
+
+            case 0x8C:  //ADC A, H
+                        ADC(this->H);
+                        this->cycles = 4;
+                        break;
+
+            case 0x8D:  //ADC A, L
+                        ADC(this->L);
+                        this->cycles = 4;
+                        break;
+
+            case 0x8E:  //ADC A, (HL)
+                        ADC((uint16_t)((this->H << 8) + this->L));
+                        this->cycles = 8;
+                        break;
+
+            case 0x8F:  //ADC A, A
+                        ADC(this->A);
+                        this->cycles = 4;
+                        break;
+
+            case 0x90:  //SUB A, B
+                        SUB(this->B);
+                        this->cycles = 4;
+                        break;
+
+            case 0x91:  //SUB A, C
+                        SUB(this->C);
+                        this->cycles = 4;
+                        break;
+
+            case 0x92:  //SUB A, D
+                        SUB(this->D);
+                        this->cycles = 4;
+                        break;
+
+            case 0x93:  //SUB A, E
+                        SUB(this->E);
+                        this->cycles = 4;
+                        break;
+
+            case 0x94:  //SUB A, H
+                        SUB(this->H);
+                        this->cycles = 4;
+                        break;
+
+            case 0x95:  //SUB A, L
+                        SUB(this->L);
+                        this->cycles = 4;
+                        break;
+
+            case 0x96:  //SUB A, (HL)
+                        SUB((uint16_t)((this->H << 8) + this->L));
+                        this->cycles = 8;
+                        break;
+
+            case 0x97:  //SUB A, A
+                        SUB(this->A);
+                        this->cycles = 4;
+                        break;
+
+            case 0x98:  //SBC A, B
+                        SBC(this->B);
+                        this->cycles = 4;
+                        break;
+
+            case 0x99:  //SBC A, C
+                        SBC(this->C);
+                        this->cycles = 4;
+                        break;
+
+            case 0x9A:  //SBC A, D
+                        SBC(this->D);
+                        this->cycles = 4;
+                        break;
+
+            case 0x9B:  //SBC A, E
+                        SBC(this->E);
+                        this->cycles = 4;
+                        break;
+
+            case 0x9C:  //SBC A, H
+                        SBC(this->H);
+                        this->cycles = 4;
+                        break;
+
+            case 0x9D:  //SBC A, L
+                        SBC(this->L);
+                        this->cycles = 4;
+                        break;
+
+            case 0x9E:  //SBC A, (HL)
+                        SBC((uint16_t)((this->H << 8) + this->L));
+                        this->cycles = 8;
+                        break;
+
+            case 0x9F:  //SBC A, A
+                        SBC(this->A);
+                        this->cycles = 4;
+                        break;
+
+            case 0xA0:  //AND A, B
+                        AND(this->B);
+                        this->cycles = 4;
+                        break;
+
+            case 0xA1:  //AND A, C
+                        AND(this->C);
+                        this->cycles = 4;
+                        break;
+
+            case 0xA2:  //AND A, D
+                        AND(this->D);
+                        this->cycles = 4;
+                        break;
+
+            case 0xA3:  //AND A, E
+                        AND(this->E);
+                        this->cycles = 4;
+                        break;
+
+            case 0xA4:  //AND A, H
+                        AND(this->H);
+                        this->cycles = 4;
+                        break;
+
+            case 0xA5:  //AND A, L
+                        AND(this->L);
+                        this->cycles = 4;
+                        break;
+
+            case 0xA6:  //AND A, (HL)
+                        AND((uint16_t)((this->H << 8) + this->L));
+                        this->cycles = 8;
+                        break;
+
+            case 0xA7:  //AND A, A
+                        AND(this->A);
+                        this->cycles = 4;
+                        break;
+
+            case 0xA8:  //XOR A, B
+                        XOR(this->B);
+                        this->cycles = 4;
+                        break;
+
+            case 0xA9:  //XOR A, C
+                        XOR(this->C);
+                        this->cycles = 4;
+                        break;
+
+            case 0xAA:  //XOR A, D
+                        XOR(this->D);
+                        this->cycles = 4;
+                        break;
+
+            case 0xAB:  //XOR A, E
+                        XOR(this->E);
+                        this->cycles = 4;
+                        break;
+
+            case 0xAC:  //XOR A, H
+                        XOR(this->H);
+                        this->cycles = 4;
+                        break;
+
+            case 0xAD:  //XOR A, L
+                        XOR(this->L);
+                        this->cycles = 4;
+                        break;
+
+            case 0xAE:  //XOR A, (HL)
+                        XOR((uint16_t)((this->H << 8) + this->L));
+                        this->cycles = 8;
+                        break;
+
+            case 0xAF:  //XOR A, A
+                        XOR(this->A);
+                        this->cycles = 4;
+                        break;
                         
-            case 0x71:
-            case 0x72:
-            case 0x73:
-            case 0x74:
-            case 0x75:
-            case 0x76:
-            case 0x77:
-            case 0x78:
-            case 0x79:
-            case 0x7A:
-            case 0x7B:
-            case 0x7C:
-            case 0x7D:
-            case 0x7E:
-            case 0x7F:
+            case 0xB0:  //OR A, B
+                        OR(this->B);
+                        this->cycles = 4;
+                        break;
 
-            case 0x80:
-            case 0x81:
-            case 0x82:
-            case 0x83:
-            case 0x84:
-            case 0x85:
-            case 0x86:
-            case 0x87:
-            case 0x88:
-            case 0x89:
-            case 0x8A:
-            case 0x8B:
-            case 0x8C:
-            case 0x8D:
-            case 0x8E:
-            case 0x8F:
+            case 0xB1:  //OR A, C
+                        OR(this->C);
+                        this->cycles = 4;
+                        break;
 
-            case 0x90:
-            case 0x91:
-            case 0x92:
-            case 0x93:
-            case 0x94:
-            case 0x95:
-            case 0x96:
-            case 0x97:
-            case 0x98:
-            case 0x99:
-            case 0x9A:
-            case 0x9B:
-            case 0x9C:
-            case 0x9D:
-            case 0x9E:
-            case 0x9F:
+            case 0xB2:  //OR A, D
+                        OR(this->D);
+                        this->cycles = 4;
+                        break;
 
-            case 0xA0:
-            case 0xA1:
-            case 0xA2:
-            case 0xA3:
-            case 0xA4:
-            case 0xA5:
-            case 0xA6:
-            case 0xA7:
-            case 0xA8:
-            case 0xA9:
-            case 0xAA:
-            case 0xAB:
-            case 0xAC:
-            case 0xAD:
-            case 0xAE:
-            case 0xAF:
+            case 0xB3:  //OR A, E
+                        OR(this->E);
+                        this->cycles = 4;
+                        break;
 
-            case 0xB0:
-            case 0xB1:
-            case 0xB2:
-            case 0xB3:
-            case 0xB4:
-            case 0xB5:
-            case 0xB6:
-            case 0xB7:
-            case 0xB8:
-            case 0xB9:
-            case 0xBA:
-            case 0xBB:
-            case 0xBC:
-            case 0xBD:
-            case 0xBE:
-            case 0xBF:
+            case 0xB4:  //OR A, H
+                        OR(this->H);
+                        this->cycles = 4;
+                        break;
 
-            case 0xC0:
-            case 0xC1:
-            case 0xC2:
-            case 0xC3:
-            case 0xC4:
-            case 0xC5:
-            case 0xC6:
-            case 0xC7:
-            case 0xC8:
-            case 0xC9:
-            case 0xCA:
-            case 0xCB:
-            case 0xCC:
-            case 0xCD:
-            case 0xCE:
-            case 0xCF:
+            case 0xB5:  //OR A, L
+                        OR(this->L);
+                        this->cycles = 4;
+                        break;
 
-            case 0xD0:
-            case 0xD1:
-            case 0xD2:
-            case 0xD3:
-            case 0xD4:
-            case 0xD5:
-            case 0xD6:
-            case 0xD7:
-            case 0xD8:
-            case 0xD9:
-            case 0xDA:
-            case 0xDB:
-            case 0xDC:
-            case 0xDD:
-            case 0xDE:
-            case 0xDF:
+            case 0xB6:  //OR A, (HL)
+                        OR((uint16_t)((this->H << 8) + this->L));
+                        this->cycles = 8;
+                        break;
+
+            case 0xB7:  //OR A, A
+                        OR(this->A);
+                        this->cycles = 4;
+                        break;
+
+            case 0xB8:  //CP A, B
+                        CP(this->B);
+                        this->cycles = 4;
+                        break;
+
+            case 0xB9:  //CP A, C
+                        CP(this->C);
+                        this->cycles = 4;
+                        break;
+
+            case 0xBA:  //CP A, D
+                        CP(this->D);
+                        this->cycles = 4;
+                        break;
+
+            case 0xBB:  //CP A, E
+                        CP(this->E);
+                        this->cycles = 4;
+                        break;
+
+            case 0xBC:  //CP A, H
+                        CP(this->H);
+                        this->cycles = 4;
+                        break;
+
+            case 0xBD:  //CP A, L
+                        CP(this->L);
+                        this->cycles = 4;
+                        break;
+
+            case 0xBE:  //CP A, (HL)
+                        CP((uint16_t)((this->H << 8) + this->L));
+                        this->cycles = 8;
+                        break;
+
+            case 0xBF:  //CP A, A
+                        CP(this->A);
+                        this->cycles = 4;
+                        break;
+
+            case 0xC0:  //RET NZ
+                        this->cycles = 8;
+                        RET(CONDITION_NZ);
+                        break;
+                        
+            case 0xC1:  //POP BC
+                        POP(this->B, this->C);
+                        this->cycles = 12;
+                        break;
+
+            case 0xC2:  //JP NZ, a16
+                        this->cycles = 12;
+                        JP(CONDITION_NZ, IMMEDIATE_16b());
+                        break;
+
+            case 0xC3:  //JP a16
+                        JP(IMMEDIATE_16b());
+                        this->cycles = 16;
+                        break;
+
+            case 0xC4:  //CALL NZ, a16
+                        this->cycles = 12;
+                        CALL(CONDITION_NZ, IMMEDIATE_16b());
+                        break;
+
+            case 0xC5:  //PUSH BC
+                        PUSH((uint16_t)((this->B << 8) + this->C));
+                        this->cycles = 16;
+                        break;
+
+            case 0xC6:  //ADD A, n8
+                        ADD(IMMEDIATE_8b());
+                        this->cycles = 8;
+                        break;
+
+            case 0xC7:  //RST 0000
+                        RST(0x00);
+                        this->cycles = 16;
+                        break;
+
+            case 0xC8:  //RET Z
+                        this->cycles = 8;
+                        RET(CONDITION_Z);
+                        break;
+
+            case 0xC9:  //RET
+                        RET();
+                        this->cycles = 16;
+                        break;
+
+            case 0xCA:  //JP Z, a16
+                        this->cycles = 12;
+                        JP(CONDITION_Z, IMMEDIATE_16b());
+                        break;
+
+            case 0xCB:  //PREFIX CB
+                        this->cycles = 4;
+                        execute_opcode_CB();
+                        break;
+
+            case 0xCC:  //CALL Z, a16
+                        this->cycles = 12;
+                        CALL(CONDITION_Z, IMMEDIATE_16b());
+                        break;
+                        
+            case 0xCD:  //CALL a16
+                        CALL(IMMEDIATE_16b());
+                        this->cycles = 24;
+                        break;
+
+            case 0xCE:  //ADC A, n8
+                        ADC(IMMEDIATE_8b());
+                        this->cycles = 8;
+                        break;
+
+            case 0xCF:  //RST 0008
+                        RST(0x08);
+                        this->cycles = 16;
+                        break;
+
+            case 0xD0:  //RET NC
+                        this->cycles = 8;
+                        RET(CONDITION_NC);
+                        break;
+
+            case 0xD1:  //POP DE
+                        POP(this->D, this->E);
+                        this->cycles = 12;
+                        break;
+
+            case 0xD2:  //JP NC, a16
+                        this->cycles = 12;
+                        JP(CONDITION_NC, IMMEDIATE_16b());
+                        break;
+
+            case 0xD4:  //CALL NC, a16
+                        this->cycles = 12;
+                        CALL(CONDITION_NC, IMMEDIATE_16b());
+                        break;
+
+            case 0xD5:  //PUSH DE
+                        PUSH((uint16_t)((this->D << 8) + this->E));
+                        this->cycles = 16;
+                        break;
+
+            case 0xD6:  //SUB A, n8
+                        SUB(IMMEDIATE_8b());
+                        this->cycles = 8;
+                        break;
+
+            case 0xD7:  //RST 0x0010
+                        RST(0x10);
+                        this->cycles = 16;
+                        break;
+
+            case 0xD8:  //RET C
+                        this->cycles = 8;
+                        RET(CONDITION_C);
+                        break;
+
+            case 0xD9:  //RETI
+                        RETI();
+                        this->cycles = 16;
+                        break;
+
+            case 0xDA:  //JP C, a16
+                        this->cycles = 12;
+                        JP(CONDITION_C, IMMEDIATE_16b());
+                        break;
+
+            case 0xDC:  //CALL C, a16
+                        this->cycles = 12;
+                        CALL(CONDITION_C, IMMEDIATE_16b());
+                        break;
+
+            case 0xDE:  //SBC A, n8
+                        SBC(IMMEDIATE_8b());
+                        this->cycles = 8;
+                        break;
+
+            case 0xDF:  //RST 0x0018
+                        RST(0x18);
+                        this->cycles = 16;
+                        break;
 
             case 0xE0:
             case 0xE1:
