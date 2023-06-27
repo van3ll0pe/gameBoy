@@ -1143,6 +1143,641 @@ namespace GB
                         this->cycles = 16;
                         break;
 
+            case 0xE0:  //LDH (0xFF00 + a8), A
+                        LD_WIO(IMMEDIATE_8b());
+                        this->cycles = 12;
+                        break;
+
+            case 0xE1:  //POP HL
+                        POP(this->H, this->L);
+                        this->cycles = 12;
+                        break;
+
+            case 0xE2:  //LD (0xFF00 + C), A
+                        LD_WIO(this->C);
+                        this->cycles = 8;
+                        break;
+
+            case 0xE5:  //PUSH HL
+                        PUSH((uint16_t)((this->H << 8) + this->L));
+                        this->cycles = 16;
+                        break;
+
+            case 0xE6:  //AND A, n8
+                        AND(IMMEDIATE_8b());
+                        this->cycles = 8;
+                        break;
+
+            case 0xE7:  //RST 0x0020
+                        RST(0x20);
+                        this->cycles = 16;
+                        break;
+
+            case 0xE8:  //ADD SP, e8
+                        ADD_SPe(IMMEDIATE_8b());
+                        this->cycles = 16;
+                        break;
+
+            case 0xE9:  //JP HL
+                        JP((uint16_t)((this->H << 8) + this->L));
+                        this->cycles = 4;
+                        break;
+
+            case 0xEA:  //LD (a16), A
+                        LD(IMMEDIATE_16b(), this->A);
+                        this->cycles = 16;
+                        break;
+
+            case 0xEE:  //XOR A, n8
+                        XOR(IMMEDIATE_8b());
+                        this->cycles = 8;
+                        break;
+
+            case 0xEF:  //RST 0x0028
+                        RST(0x28);
+                        this->cycles = 16;
+                        break;
+
+            case 0xF0:  //LDH A, (0xFF00 + n8)
+                        LD_RIO(IMMEDIATE_8b());
+                        this->cycles = 12;
+                        break;
+
+            case 0xF1:  //POP AF
+                        POP(this->A, this->F);
+                        this->cycles = 12;
+                        break;
+
+            case 0xF2:  //LD A, (0xFF00 + C)
+                        LD_RIO(this->C);
+                        this->cycles = 8;
+                        break;
+
+            case 0xF3:  //DI
+                        DI();
+                        this->cycles = 4;
+                        break;
+
+            case 0xF5:  //PUSH AF
+                        PUSH((uint16_t)((this->A << 8) + this->F));
+                        this->cycles = 16;
+                        break;
+
+            case 0xF6:  //OR A, n8
+                        OR(IMMEDIATE_8b());
+                        this->cycles = 8;
+                        break;
+
+            case 0xF7:  //RST 0x0030
+                        RST(0x30);
+                        this->cycles = 16;
+                        break;
+
+            case 0xF8:  //LD HL, SP + e8
+                        LD_HLSPe(IMMEDIATE_8b());
+                        this->cycles = 12;
+                        break;
+
+            case 0xF9:  //LD SP, HL
+                        LD(this->SP, (uint16_t)((this->H << 8) + this->L));
+                        this->cycles = 8;
+                        break;
+
+            case 0xFA:  //LD A, (a16)
+                        LD(this->A, IMMEDIATE_16b());
+                        this->cycles = 16;
+                        break;
+
+            case 0xFB:  //EI
+                        EI();
+                        this->cycles = 4;
+                        break;
+
+            case 0xFE:  //CP A, n8
+                        CP(IMMEDIATE_8b());
+                        this->cycles = 8;
+                        break;
+
+            case 0xFF:  //RST 0x0038
+                        RST(0x38);
+                        this->cycles = 16;
+                        break;
+
+            default: throw std::runtime_error("ILLEGAL OPCODE");
+                     break;
+        }
+    }
+
+
+    void
+    Cpu::execute_opcode_CB()
+    {
+        fetch_opcode();
+
+        switch(this->opcode)
+        {
+            case 0x00:  //RLC B
+                        RLC(this->B);
+                        this->cycles += 8;
+                        break;
+
+            case 0x01:  //RLC C
+                        RLC(this->C);
+                        this->cycles += 8;
+                        break;
+
+            case 0x02:  //RLC D
+                        RLC(this->D);
+                        this->cycles += 8;
+                        break;
+
+            case 0x03:  //RLC E
+                        RLC(this->E);
+                        this->cycles += 8;
+                        break;
+
+            case 0x04:  //RLC H
+                        RLC(this->H);
+                        this->cycles += 8;
+                        break;
+
+            case 0x05:  //RLC L
+                        RLC(this->L);
+                        this->cycles += 8;
+                        break;
+
+            case 0x06:  //RLC (HL)
+                        RLC((uint16_t)((this->H << 8) + this->L));
+                        this->cycles += 16;
+                        break;
+
+            case 0x07:  //RLC A
+                        RLC(this->A);
+                        this->cycles += 8;
+                        break;
+
+            case 0x08:  //RRC B
+                        RRC(this->B);
+                        this->cycles += 8;
+                        break;
+
+            case 0x09:  //RRC C
+                        RRC(this->C);
+                        this->cycles += 8;
+                        break;
+
+            case 0x0A:  //RRC D
+                        RRC(this->D);
+                        this->cycles += 8;
+                        break;
+
+            case 0x0B:  //RRC E
+                        RRC(this->E);
+                        this->cycles += 8;
+                        break;
+
+            case 0x0C:  //RRC H
+                        RRC(this->H);
+                        this->cycles += 8;
+                        break;
+
+            case 0x0D:  //RRC L
+                        RRC(this->L);
+                        this->cycles += 8;
+                        break;
+
+            case 0x0E:  //RRC (HL)
+                        RRC((uint16_t)((this->H << 8) + this->L));
+                        this->cycles += 16;
+                        break;
+
+            case 0x0F:  //RRC A
+                        RRC(this->A);
+                        this->cycles += 8;
+                        break;
+
+            case 0x10:  //RL B
+                        RL(this->B);
+                        this->cycles += 8;
+                        break;
+
+            case 0x11:  //RL C
+                        RL(this->C);
+                        this->cycles += 8;
+                        break;
+
+            case 0x12:  //RL D
+                        RL(this->D);
+                        this->cycles += 8;
+                        break;
+
+            case 0x13:  //RL E
+                        RL(this->E);
+                        this->cycles += 8;
+                        break;
+
+            case 0x14:  //RL H
+                        RL(this->H);
+                        this->cycles += 8;
+                        break;
+
+            case 0x15:  //RL L
+                        RL(this->L);
+                        this->cycles += 8;
+                        break;
+
+            case 0x16:  //RL (HL)
+                        RL((uint16_t)((this->H << 8) + this->L));
+                        this->cycles += 16;
+                        break;
+
+            case 0x17:  //RL A
+                        RL(this->A);
+                        this->cycles += 8;
+                        break;
+
+            case 0x18:  //RR B
+                        RR(this->B);
+                        this->cycles += 8;
+                        break;
+
+            case 0x19:  //RR C
+                        RR(this->C);
+                        this->cycles += 8;
+                        break;
+
+            case 0x1A:  //RR D
+                        RR(this->D);
+                        this->cycles += 8;
+                        break;
+
+            case 0x1B:  //RR E
+                        RR(this->E);
+                        this->cycles += 8;
+                        break;
+
+            case 0x1C:  //RR H
+                        RR(this->H);
+                        this->cycles += 8;
+                        break;
+
+            case 0x1D:  //RR L
+                        RR(this->L);
+                        this->cycles += 8;
+                        break;
+
+            case 0x1E:  //RR (HL)
+                        RR((uint16_t)((this->H << 8) + this->L));
+                        this->cycles += 16;
+                        break;
+
+            case 0x1F:  //RR A
+                        RR(this->A);
+                        this->cycles += 8;
+                        break;
+                        
+            case 0x20:  //SLA B
+                        SLA(this->B);
+                        this->cycles += 8;
+                        break;
+
+            case 0x21:  //SLA C
+                        SLA(this->C);
+                        this->cycles += 8;
+                        break;
+
+            case 0x22:  //SLA D
+                        SLA(this->D);
+                        this->cycles += 8;
+                        break;
+
+            case 0x23:  //SLA E
+                        SLA(this->E);
+                        this->cycles += 8;
+                        break;
+
+            case 0x24:  //SLA H
+                        SLA(this->H);
+                        this->cycles += 8;
+                        break;
+
+            case 0x25:  //SLA L
+                        SLA(this->L);
+                        this->cycles += 8;
+                        break;
+
+            case 0x26:  //SLA (HL)
+                        SLA((uint16_t)((this->H << 8) + this->L));
+                        this->cycles += 16;
+                        break;
+
+            case 0x27:  //SLA A
+                        SLA(this->A);
+                        this->cycles += 8;
+                        break;
+
+            case 0x28:  //SRA B
+                        SRA(this->B);
+                        this->cycles += 8;
+                        break;
+
+            case 0x29:  //SRA C
+                        SRA(this->C);
+                        this->cycles += 8;
+                        break;
+
+            case 0x2A:  //SRA D
+                        SRA(this->D);
+                        this->cycles += 8;
+                        break;
+
+            case 0x2B:  //SRA E
+                        SRA(this->E);
+                        this->cycles += 8;
+                        break;
+
+            case 0x2C:  //SRA H
+                        SRA(this->H);
+                        this->cycles += 8;
+                        break;
+
+            case 0x2D:  //SRA L
+                        SRA(this->L);
+                        this->cycles += 8;
+                        break;
+
+            case 0x2E:  //SRA (HL)
+                        SRA((uint16_t)((this->H << 8) + this->L));
+                        this->cycles += 16;
+                        break;
+
+            case 0x2F:  //SRA A
+                        SRA(this->A);
+                        this->cycles += 8;
+                        break;
+
+            case 0x30:  //SWAP B
+                        SWAP(this->B);
+                        this->cycles += 8;
+                        break;
+
+            case 0x31:  //SWAP C
+                        SWAP(this->C);
+                        this->cycles += 8;
+                        break;
+
+            case 0x32:  //SWAP D
+                        SWAP(this->D);
+                        this->cycles += 8;
+                        break;
+
+            case 0x33:  //SWAP E
+                        SWAP(this->E);
+                        this->cycles += 8;
+                        break;
+
+            case 0x34:  //SWAP H
+                        SWAP(this->H);
+                        this->cycles += 8;
+                        break;
+
+            case 0x35:  //SWAP L
+                        SWAP(this->L);
+                        this->cycles += 8;
+                        break;
+
+            case 0x36:  //SWAP (HL)
+                        SWAP((uint16_t)((this->H << 8) + this->L));
+                        this->cycles += 16;
+                        break;
+
+            case 0x37:  //SWAP A
+                        SWAP(this->A);
+                        this->cycles += 8;
+                        break;
+
+            case 0x38:  //SRL B
+                        SRL(this->B);
+                        this->cycles += 8;
+                        break;
+
+            case 0x39:  //SRL C
+                        SRL(this->C);
+                        this->cycles += 8;
+                        break;
+
+            case 0x3A:  //SRL D
+                        SRL(this->D);
+                        this->cycles += 8;
+                        break;
+
+            case 0x3B:  //SRL E
+                        SRL(this->E);
+                        this->cycles += 8;
+                        break;
+
+            case 0x3C:  //SRL H
+                        SRL(this->H);
+                        this->cycles += 8;
+                        break;
+
+            case 0x3D:  //SRL L
+                        SRL(this->L);
+                        this->cycles += 8;
+                        break;
+
+            case 0x3E:  //SRL (HL)
+                        SRL((uint16_t)((this->H << 8) + this->L));
+                        this->cycles += 16;
+                        break;
+
+            case 0x3F:  //SRL A
+                        SRL(this->A);
+                        this->cycles += 8;
+                        break;
+
+            case 0x40:  //BIT 0, B
+                        BIT(BIT_0, this->B);
+                        this->cycles += 8;
+                        break;
+
+            case 0x41:  //BIT 0, C
+                        BIT(BIT_0, this->C);
+                        this->cycles += 8;
+                        break;
+
+            case 0x42:  //BIT 0, D
+                        BIT(BIT_0, this->D);
+                        this->cycles += 8;
+                        break;
+                        
+            case 0x43:
+            case 0x44:
+            case 0x45:
+            case 0x46:
+            case 0x47:
+            case 0x48:
+            case 0x49:
+            case 0x4A:
+            case 0x4B:
+            case 0x4C:
+            case 0x4D:
+            case 0x4E:
+            case 0x4F:
+
+            case 0x50:
+            case 0x51:
+            case 0x52:
+            case 0x53:
+            case 0x54:
+            case 0x55:
+            case 0x56:
+            case 0x57:
+            case 0x58:
+            case 0x59:
+            case 0x5A:
+            case 0x5B:
+            case 0x5C:
+            case 0x5D:
+            case 0x5E:
+            case 0x5F:
+
+            case 0x60:
+            case 0x61:
+            case 0x62:
+            case 0x63:
+            case 0x64:
+            case 0x65:
+            case 0x66:
+            case 0x67:
+            case 0x68:
+            case 0x69:
+            case 0x6A:
+            case 0x6B:
+            case 0x6C:
+            case 0x6D:
+            case 0x6E:
+            case 0x6F:
+
+            case 0x70:
+            case 0x71:
+            case 0x72:
+            case 0x73:
+            case 0x74:
+            case 0x75:
+            case 0x76:
+            case 0x77:
+            case 0x78:
+            case 0x79:
+            case 0x7A:
+            case 0x7B:
+            case 0x7C:
+            case 0x7D:
+            case 0x7E:
+            case 0x7F:
+
+            case 0x80:
+            case 0x81:
+            case 0x82:
+            case 0x83:
+            case 0x84:
+            case 0x85:
+            case 0x86:
+            case 0x87:
+            case 0x88:
+            case 0x89:
+            case 0x8A:
+            case 0x8B:
+            case 0x8C:
+            case 0x8D:
+            case 0x8E:
+            case 0x8F:
+
+            case 0x90:
+            case 0x91:
+            case 0x92:
+            case 0x93:
+            case 0x94:
+            case 0x95:
+            case 0x96:
+            case 0x97:
+            case 0x98:
+            case 0x99:
+            case 0x9A:
+            case 0x9B:
+            case 0x9C:
+            case 0x9D:
+            case 0x9E:
+            case 0x9F:
+
+            case 0xA0:
+            case 0xA1:
+            case 0xA2:
+            case 0xA3:
+            case 0xA4:
+            case 0xA5:
+            case 0xA6:
+            case 0xA7:
+            case 0xA8:
+            case 0xA9:
+            case 0xAA:
+            case 0xAB:
+            case 0xAC:
+            case 0xAD:
+            case 0xAE:
+            case 0xAF:
+
+            case 0xB0:
+            case 0xB1:
+            case 0xB2:
+            case 0xB3:
+            case 0xB4:
+            case 0xB5:
+            case 0xB6:
+            case 0xB7:
+            case 0xB8:
+            case 0xB9:
+            case 0xBA:
+            case 0xBB:
+            case 0xBC:
+            case 0xBD:
+            case 0xBE:
+            case 0xBF:
+
+            case 0xC0:
+            case 0xC1:
+            case 0xC2:
+            case 0xC3:
+            case 0xC4:
+            case 0xC5:
+            case 0xC6:
+            case 0xC7:
+            case 0xC8:
+            case 0xC9:
+            case 0xCA:
+            case 0xCB:
+            case 0xCC:
+            case 0xCD:
+            case 0xCE:
+            case 0xCF:
+
+            case 0xD0:
+            case 0xD1:
+            case 0xD2:
+            case 0xD3:
+            case 0xD4:
+            case 0xD5:
+            case 0xD6:
+            case 0xD7:
+            case 0xD8:
+            case 0xD9:
+            case 0xDA:
+            case 0xDB:
+            case 0xDC:
+            case 0xDD:
+            case 0xDE:
+            case 0xDF:
+
             case 0xE0:
             case 0xE1:
             case 0xE2:
@@ -1177,13 +1812,11 @@ namespace GB
             case 0xFE:
             case 0xFF:
 
-            default: throw std::runtime_error("ILLEGAL OPCODE");
-                     break;
+            default: //ILLEGAL OPCODE
+                    throw std::runtime_error("ILLEGAL CB OPCODE");
+                    break;
         }
     }
-
-
-    void execute_opcode_CB();
 
 
 
