@@ -9,13 +9,72 @@ namespace GB
         this->C = 0x13;
         this->D = 0;
         this->E = 0xD8;
-        this->F = 0;
+        this->F = 0x80;
         this->H = 0x1;
         this->L = 0x4D;
         this->PC = 0x0100;
         this->SP = 0xFFFE;
 
         this->cycles = 0;
+        this->IME = 0;
+
+        //value in hard registers
+        write(HR_P1, 0xCF);
+        write(HR_SB, 0x00);
+        write(HR_SC, 0x7E);
+        write(HR_DIV, 0xAB);
+        write(HR_TIMA, 0x00);
+        write(HR_TMA, 0x00);
+        write(HR_TAC, 0xF8);
+        write(HR_IF, 0xE1);
+        write(HR_NR10, 0x80);
+        write(HR_NR11, 0xBF);
+        write(HR_NR12, 0xF3);
+        write(HR_NR13, 0xFF);
+        write(HR_NR14, 0xBF);
+        write(HR_NR21, 0x3F);
+        write(HR_NR22, 0x00);
+        write(HR_NR23, 0xFF);
+        write(HR_NR24, 0xBF);
+        write(HR_NR30, 0x7F);
+        write(HR_NR31, 0xFF);
+        write(HR_NR32, 0x9F);
+        write(HR_NR33, 0xFF);
+        write(HR_NR34, 0xBF);
+        write(HR_NR41, 0xFF);
+        write(HR_NR42, 0x00);
+        write(HR_NR43, 0x00);
+        write(HR_NR44, 0xBF);
+        write(HR_NR50, 0x77);
+        write(HR_NR51, 0xF3);
+        write(HR_NR52, 0xF1);
+        write(HR_LCDC, 0x91);
+        write(HR_STAT, 0x85);
+        write(HR_SCY, 0x00);
+        write(HR_SCX, 0x00);
+        write(HR_LY, 0x00);
+        write(HR_LYC, 0x00);
+        write(HR_DMA, 0xFF);
+        write(HR_BGP, 0xFC);
+        write(HR_OBP0, 0x00);
+        write(HR_OBP1, 0x00);
+        write(HR_WY, 0x00);
+        write(HR_WX, 0x00);
+        write(HR_KEY1, 0xFF);
+        write(HR_VBK, 0xFF);
+        write(HR_HDMA1, 0xFF);
+        write(HR_HDMA2, 0xFF);
+        write(HR_HDMA3, 0xFF);
+        write(HR_HDMA4, 0xFF);
+        write(HR_HDMA5, 0xFF);
+        write(HR_RP, 0xFF);
+        write(HR_BCPS, 0xFF);
+        write(HR_BCPD, 0xFF);
+        write(HR_OCPS, 0xFF);
+        write(HR_OCPD, 0xFF);
+        write(HR_SVBK, 0xFF);
+        write(HR_IE, 0x00);
+
     }
 
     Cpu::~Cpu() {}
@@ -1611,206 +1670,950 @@ namespace GB
                         this->cycles += 8;
                         break;
                         
-            case 0x43:
-            case 0x44:
-            case 0x45:
-            case 0x46:
-            case 0x47:
-            case 0x48:
-            case 0x49:
-            case 0x4A:
-            case 0x4B:
-            case 0x4C:
-            case 0x4D:
-            case 0x4E:
-            case 0x4F:
+            case 0x43:  //BIT 0, E
+                        BIT(BIT_0, this->E);
+                        this->cycles += 8;
+                        break;
 
-            case 0x50:
-            case 0x51:
-            case 0x52:
-            case 0x53:
-            case 0x54:
-            case 0x55:
-            case 0x56:
-            case 0x57:
-            case 0x58:
-            case 0x59:
-            case 0x5A:
-            case 0x5B:
-            case 0x5C:
-            case 0x5D:
-            case 0x5E:
-            case 0x5F:
+            case 0x44:  //BIT 0, H
+                        BIT(BIT_0, this->H);
+                        this->cycles += 8;
+                        break;
 
-            case 0x60:
-            case 0x61:
-            case 0x62:
-            case 0x63:
-            case 0x64:
-            case 0x65:
-            case 0x66:
-            case 0x67:
-            case 0x68:
-            case 0x69:
-            case 0x6A:
-            case 0x6B:
-            case 0x6C:
-            case 0x6D:
-            case 0x6E:
-            case 0x6F:
+            case 0x45:  //BIT 0, L
+                        BIT(BIT_0, this->L);
+                        this->cycles += 8;
+                        break;
 
-            case 0x70:
-            case 0x71:
-            case 0x72:
-            case 0x73:
-            case 0x74:
-            case 0x75:
-            case 0x76:
-            case 0x77:
-            case 0x78:
-            case 0x79:
-            case 0x7A:
-            case 0x7B:
-            case 0x7C:
-            case 0x7D:
-            case 0x7E:
-            case 0x7F:
+            case 0x46:  //BIT 0, (HL)
+                        BIT(BIT_0, (uint16_t)((this->H << 8) + this->L));
+                        this->cycles += 12;
+                        break;
 
-            case 0x80:
-            case 0x81:
-            case 0x82:
-            case 0x83:
-            case 0x84:
-            case 0x85:
-            case 0x86:
-            case 0x87:
-            case 0x88:
-            case 0x89:
-            case 0x8A:
-            case 0x8B:
-            case 0x8C:
-            case 0x8D:
-            case 0x8E:
-            case 0x8F:
+            case 0x47:  //BIT 0, A
+                        BIT(BIT_0, this->A);
+                        this->cycles += 8;
+                        break;
 
-            case 0x90:
-            case 0x91:
-            case 0x92:
-            case 0x93:
-            case 0x94:
-            case 0x95:
-            case 0x96:
-            case 0x97:
-            case 0x98:
-            case 0x99:
-            case 0x9A:
-            case 0x9B:
-            case 0x9C:
-            case 0x9D:
-            case 0x9E:
-            case 0x9F:
+            case 0x48:  //BIT 1, B
+                        BIT(BIT_1, this->B);
+                        this->cycles += 8;
+                        break;
 
-            case 0xA0:
-            case 0xA1:
-            case 0xA2:
-            case 0xA3:
-            case 0xA4:
-            case 0xA5:
-            case 0xA6:
-            case 0xA7:
-            case 0xA8:
-            case 0xA9:
-            case 0xAA:
-            case 0xAB:
-            case 0xAC:
-            case 0xAD:
-            case 0xAE:
-            case 0xAF:
+            case 0x49:  //BIT 1, C
+                        BIT(BIT_1, this->C);
+                        this->cycles += 8;
+                        break;
 
-            case 0xB0:
-            case 0xB1:
-            case 0xB2:
-            case 0xB3:
-            case 0xB4:
-            case 0xB5:
-            case 0xB6:
-            case 0xB7:
-            case 0xB8:
-            case 0xB9:
-            case 0xBA:
-            case 0xBB:
-            case 0xBC:
-            case 0xBD:
-            case 0xBE:
-            case 0xBF:
+            case 0x4A:  //BIT 1, D
+                        BIT(BIT_1, this->D);
+                        this->cycles += 8;
+                        break;
 
-            case 0xC0:
-            case 0xC1:
-            case 0xC2:
-            case 0xC3:
-            case 0xC4:
-            case 0xC5:
-            case 0xC6:
-            case 0xC7:
-            case 0xC8:
-            case 0xC9:
-            case 0xCA:
-            case 0xCB:
-            case 0xCC:
-            case 0xCD:
-            case 0xCE:
-            case 0xCF:
+            case 0x4B:  //BIT 1, E
+                        BIT(BIT_1, this->E);
+                        this->cycles += 8;
+                        break;
 
-            case 0xD0:
-            case 0xD1:
-            case 0xD2:
-            case 0xD3:
-            case 0xD4:
-            case 0xD5:
-            case 0xD6:
-            case 0xD7:
-            case 0xD8:
-            case 0xD9:
-            case 0xDA:
-            case 0xDB:
-            case 0xDC:
-            case 0xDD:
-            case 0xDE:
-            case 0xDF:
+            case 0x4C:  //BIT 1, H
+                        BIT(BIT_1, this->H);
+                        this->cycles += 8;
+                        break;
 
-            case 0xE0:
-            case 0xE1:
-            case 0xE2:
-            case 0xE3:
-            case 0xE4:
-            case 0xE5:
-            case 0xE6:
-            case 0xE7:
-            case 0xE8:
-            case 0xE9:
-            case 0xEA:
-            case 0xEB:
-            case 0xEC:
-            case 0xED:
-            case 0xEE:
-            case 0xEF:
+            case 0x4D:  //BIT 1, L
+                        BIT(BIT_1, this->L);
+                        this->cycles += 8;
+                        break;
 
-            case 0xF0:
-            case 0xF1:
-            case 0xF2:
-            case 0xF3:
-            case 0xF4:
-            case 0xF5:
-            case 0xF6:
-            case 0xF7:
-            case 0xF8:
-            case 0xF9:
-            case 0xFA:
-            case 0xFB:
-            case 0xFC:
-            case 0xFD:
-            case 0xFE:
-            case 0xFF:
+            case 0x4E:  //BIT 1, (HL)
+                        BIT(BIT_1, (uint16_t)((this->H << 8) + this->L));
+                        this->cycles += 12;
+                        break;
+
+            case 0x4F:  //BIT 1, A
+                        BIT(BIT_1, this->A);
+                        this->cycles += 8;
+                        break;
+                        
+            case 0x50:  //BIT 2, B
+                        BIT(BIT_2, this->B);
+                        this->cycles += 8;
+                        break;
+
+            case 0x51:  //BIT 2, C
+                        BIT(BIT_2, this->C);
+                        this->cycles += 8;
+                        break;
+
+            case 0x52:  //BIT 2, D
+                        BIT(BIT_2, this->D);
+                        this->cycles += 8;
+                        break;
+
+            case 0x53:  //BIT 2, E
+                        BIT(BIT_2, this->E);
+                        this->cycles += 8;
+                        break;
+
+            case 0x54:  //BIT 2, H
+                        BIT(BIT_2, this->H);
+                        this->cycles += 8;
+                        break;
+
+            case 0x55:  //BIT 2, L
+                        BIT(BIT_2, this->L);
+                        this->cycles += 8;
+                        break;
+
+            case 0x56:  //BIT 2, (HL)
+                        BIT(BIT_2, (uint16_t)((this->H << 8) + this->L));
+                        this->cycles += 12;
+                        break;
+
+            case 0x57:  //BIT 2, A
+                        BIT(BIT_2, this->A);
+                        this->cycles += 8;
+                        break;
+
+            case 0x58:  //BIT 3, B
+                        BIT(BIT_3, this->B);
+                        this->cycles += 8;
+                        break;
+
+            case 0x59:  //BIT 3, C
+                        BIT(BIT_3, this->C);
+                        this->cycles += 8;
+                        break;
+
+            case 0x5A:  //BIT 3, D
+                        BIT(BIT_3, this->D);
+                        this->cycles += 8;
+                        break;
+//
+            case 0x5B:  //BIT 3, E
+                        BIT(BIT_3, this->E);
+                        this->cycles += 8;
+                        break;
+
+            case 0x5C:  //BIT 3, H
+                        BIT(BIT_3, this->H);
+                        this->cycles += 8;
+                        break;
+
+            case 0x5D:  //BIT 3, L
+                        BIT(BIT_3, this->L);
+                        this->cycles += 8;
+                        break;
+
+            case 0x5E:  //BIT 3, (HL)
+                        BIT(BIT_3, (uint16_t)((this->H << 8) + this->L));
+                        this->cycles += 12;
+                        break;
+
+            case 0x5F:  //BIT 3, A
+                        BIT(BIT_3, this->A);
+                        this->cycles += 8;
+                        break;
+                        
+            case 0x60:  //BIT 4, B
+                        BIT(BIT_4, this->B);
+                        this->cycles += 8;
+                        break;
+
+            case 0x61:  //BIT 4, C
+                        BIT(BIT_4, this->C);
+                        this->cycles += 8;
+                        break;
+
+            case 0x62:  //BIT 4, D
+                        BIT(BIT_4, this->D);
+                        this->cycles += 8;
+                        break;
+
+            case 0x63:  //BIT 4, E
+                        BIT(BIT_4, this->E);
+                        this->cycles += 8;
+                        break;
+
+            case 0x64:  //BIT 4, H
+                        BIT(BIT_4, this->H);
+                        this->cycles += 8;
+                        break;
+
+            case 0x65:  //BIT 4, L
+                        BIT(BIT_4, this->L);
+                        this->cycles += 8;
+                        break;
+
+            case 0x66:  //BIT 4, (HL)
+                        BIT(BIT_4, (uint16_t)((this->H << 8) + this->L));
+                        this->cycles += 12;
+                        break;
+
+            case 0x67:  //BIT 4, A
+                        BIT(BIT_4, this->A);
+                        this->cycles += 8;
+                        break;
+
+            case 0x68:  //BIT 5, B
+                        BIT(BIT_5, this->B);
+                        this->cycles += 8;
+                        break;
+
+            case 0x69:  //BIT 5, C
+                        BIT(BIT_5, this->C);
+                        this->cycles += 8;
+                        break;
+
+            case 0x6A:  //BIT 5, D
+                        BIT(BIT_5, this->D);
+                        this->cycles += 8;
+                        break;
+
+            case 0x6B:  //BIT 5, E
+                        BIT(BIT_5, this->E);
+                        this->cycles += 8;
+                        break;
+
+            case 0x6C:  //BIT 5, H
+                        BIT(BIT_5, this->H);
+                        this->cycles += 8;
+                        break;
+
+            case 0x6D:  //BIT 5, L
+                        BIT(BIT_5, this->L);
+                        this->cycles += 8;
+                        break;
+
+            case 0x6E:  //BIT 5, (HL)
+                        BIT(BIT_5, (uint16_t)((this->H << 8) + this->L));
+                        this->cycles += 12;
+                        break;
+
+            case 0x6F:  //BIT 5, A
+                        BIT(BIT_5, this->A);
+                        this->cycles += 8;
+                        break;
+                        
+            case 0x70:  //BIT 6, B
+                        BIT(BIT_6, this->B);
+                        this->cycles += 8;
+                        break;
+
+            case 0x71:  //BIT 6, C
+                        BIT(BIT_6, this->C);
+                        this->cycles += 8;
+                        break;
+
+            case 0x72:  //BIT 6, D
+                        BIT(BIT_6, this->D);
+                        this->cycles += 8;
+                        break;
+
+            case 0x73:  //BIT 6, E
+                        BIT(BIT_6, this->E);
+                        this->cycles += 8;
+                        break;
+
+            case 0x74:  //BIT 6, H
+                        BIT(BIT_6, this->H);
+                        this->cycles += 8;
+                        break;
+
+            case 0x75:  //BIT 6, L
+                        BIT(BIT_6, this->L);
+                        this->cycles += 8;
+                        break;
+
+            case 0x76:  //BIT 6, (HL)
+                        BIT(BIT_6, (uint16_t)((this->H << 8) + this->L));
+                        this->cycles += 12;
+                        break;
+
+            case 0x77:  //BIT 6, A
+                        BIT(BIT_6, this->A);
+                        this->cycles += 8;
+                        break;
+
+            case 0x78:  //BIT 7, B
+                        BIT(BIT_7, this->B);
+                        this->cycles += 8;
+                        break;
+
+            case 0x79:  //BIT 7, C
+                        BIT(BIT_7, this->C);
+                        this->cycles += 8;
+                        break;
+
+            case 0x7A:  //BIT 7, D
+                        BIT(BIT_7, this->D);
+                        this->cycles += 8;
+                        break;
+
+            case 0x7B:  //BIT 7, E
+                        BIT(BIT_7, this->E);
+                        this->cycles += 8;
+                        break;
+
+            case 0x7C:  //BIT 7, H
+                        BIT(BIT_7, this->H);
+                        this->cycles += 8;
+                        break;
+
+            case 0x7D:  //BIT 7, L
+                        BIT(BIT_7, this->L);
+                        this->cycles += 8;
+                        break;
+
+            case 0x7E:  //BIT 7, (HL)
+                        BIT(BIT_7, (uint16_t)((this->H << 8) + this->L));
+                        this->cycles += 12;
+                        break;
+
+            case 0x7F:  //BIT 7, A
+                        BIT(BIT_7, this->A);
+                        this->cycles += 8;
+                        break;
+
+            case 0x80:  //RES 0, B
+                        RES(BIT_0, this->B);
+                        this->cycles += 8;
+                        break;
+
+            case 0x81:  //RES 0, C
+                        RES(BIT_0, this->C);
+                        this->cycles += 8;
+                        break;
+
+            case 0x82:  //RES 0, D
+                        RES(BIT_0, this->D);
+                        this->cycles += 8;
+                        break;
+
+            case 0x83:  //RES 0, E
+                        RES(BIT_0, this->E);
+                        this->cycles += 8;
+                        break;
+
+            case 0x84:  //RES 0, H
+                        RES(BIT_0, this->H);
+                        this->cycles += 8;
+                        break;
+
+            case 0x85:  //RES 0, L
+                        RES(BIT_0, this->L);
+                        this->cycles += 8;
+                        break;
+
+            case 0x86:  //RES 0, (HL)
+                        RES(BIT_0, (uint16_t)((this->H << 8) + this->L));
+                        this->cycles += 16;
+                        break;
+
+            case 0x87:  //RES 0, A
+                        RES(BIT_0, this->A);
+                        this->cycles += 8;
+                        break;
+
+            case 0x88:  //RES 1, B
+                        RES(BIT_1, this->B);
+                        this->cycles += 8;
+                        break;
+
+            case 0x89:  //RES 1, C
+                        RES(BIT_1, this->C);
+                        this->cycles += 8;
+                        break;
+
+            case 0x8A:  //RES 1, D
+                        RES(BIT_1, this->D);
+                        this->cycles += 8;
+                        break;
+
+            case 0x8B:  //RES 1, E
+                        RES(BIT_1, this->E);
+                        this->cycles += 8;
+                        break;
+
+            case 0x8C:  //RES 1, H
+                        RES(BIT_1, this->H);
+                        this->cycles += 8;
+                        break;
+
+            case 0x8D:  //RES 1, L
+                        RES(BIT_1, this->L);
+                        this->cycles += 8;
+                        break;
+
+            case 0x8E:  //RES 1, (HL)
+                        RES(BIT_1, (uint16_t)((this->H << 8) + this->L));
+                        this->cycles += 16;
+                        break;
+
+            case 0x8F:  //RES 1, A
+                        RES(BIT_1, this->A);
+                        this->cycles += 8;
+                        break;
+
+            case 0x90:  //RES 2, B
+                        RES(BIT_2, this->B);
+                        this->cycles += 8;
+                        break;
+
+            case 0x91:  //RES 2, C
+                        RES(BIT_2, this->C);
+                        this->cycles += 8;
+                        break;
+
+            case 0x92:  //RES 2, D
+                        RES(BIT_2, this->D);
+                        this->cycles += 8;
+                        break;
+
+            case 0x93:  //RES 2, E
+                        RES(BIT_2, this->E);
+                        this->cycles += 8;
+                        break;
+
+            case 0x94:  //RES 2, H
+                        RES(BIT_2, this->H);
+                        this->cycles += 8;
+                        break;
+
+            case 0x95:  //RES 2, L
+                        RES(BIT_2, this->L);
+                        this->cycles += 8;
+                        break;
+
+            case 0x96:  //RES 2, (HL)
+                        RES(BIT_2, (uint16_t)((this->H << 8) + this->L));
+                        this->cycles += 16;
+                        break;
+
+            case 0x97:  //RES 2, A
+                        RES(BIT_2, this->A);
+                        this->cycles += 8;
+                        break;
+
+            case 0x98:  //RES 3, B
+                        RES(BIT_3, this->B);
+                        this->cycles += 8;
+                        break;
+
+            case 0x99:  //RES 3, C
+                        RES(BIT_3, this->C);
+                        this->cycles += 8;
+                        break;
+
+            case 0x9A:  //RES 3, D
+                        RES(BIT_3, this->D);
+                        this->cycles += 8;
+                        break;
+
+            case 0x9B:  //RES 3, E
+                        RES(BIT_3, this->E);
+                        this->cycles += 8;
+                        break;
+
+            case 0x9C:  //RES 3, H
+                        RES(BIT_3, this->H);
+                        this->cycles += 8;
+                        break;
+
+            case 0x9D:  //RES 3, L
+                        RES(BIT_3, this->L);
+                        this->cycles += 8;
+                        break;
+
+            case 0x9E:  //RES 3, (HL)
+                        RES(BIT_3, (uint16_t)((this->H << 8) + this->L));
+                        this->cycles += 16;
+                        break;
+
+            case 0x9F:  //RES 3, A
+                        RES(BIT_3, this->A);
+                        this->cycles += 8;
+                        break;
+
+            case 0xA0:  //RES 4, B
+                        RES(BIT_4, this->B);
+                        this->cycles += 8;
+                        break;
+
+            case 0xA1:  //RES 4, C
+                        RES(BIT_4, this->C);
+                        this->cycles += 8;
+                        break;
+
+            case 0xA2:  //RES 4, D
+                        RES(BIT_4, this->D);
+                        this->cycles += 8;
+                        break;
+
+            case 0xA3:  //RES 4, E
+                        RES(BIT_4, this->E);
+                        this->cycles += 8;
+                        break;
+
+            case 0xA4:  //RES 4, H
+                        RES(BIT_4, this->H);
+                        this->cycles += 8;
+                        break;
+
+            case 0xA5:  //RES 4, L
+                        RES(BIT_4, this->L);
+                        this->cycles += 8;
+                        break;
+
+            case 0xA6:  //RES 4, (HL)
+                        RES(BIT_4, (uint16_t)((this->H << 8) + this->L));
+                        this->cycles += 16;
+                        break;
+
+            case 0xA7:  //RES 4, A
+                        RES(BIT_4, this->A);
+                        this->cycles += 8;
+                        break;
+
+            case 0xA8:  //RES 5, B
+                        RES(BIT_5, this->B);
+                        this->cycles += 8;
+                        break;
+
+            case 0xA9:  //RES 5, C
+                        RES(BIT_5, this->C);
+                        this->cycles += 8;
+                        break;
+
+            case 0xAA:  //RES 5, D
+                        RES(BIT_5, this->D);
+                        this->cycles += 8;
+                        break;
+
+            case 0xAB:  //RES 5, E
+                        RES(BIT_5, this->E);
+                        this->cycles += 8;
+                        break;
+
+            case 0xAC:  //RES 5, H
+                        RES(BIT_5, this->H);
+                        this->cycles += 8;
+                        break;
+                        
+            case 0xAD:  //RES 5, L
+                        RES(BIT_5, this->L);
+                        this->cycles += 8;
+                        break;
+
+            case 0xAE:  //RES 5, (HL)
+                        RES(BIT_5, (uint16_t)((this->H << 8) + this->L));
+                        this->cycles += 16;
+                        break;
+
+            case 0xAF:  //RES 5, A
+                        RES(BIT_5, this->A);
+                        this->cycles += 8;
+                        break;
+
+            case 0xB0:  //RES 6, B
+                        RES(BIT_6, this->B);
+                        this->cycles += 8;
+                        break;
+
+            case 0xB1:  //RES 6, C
+                        RES(BIT_6, this->C);
+                        this->cycles += 8;
+                        break;
+
+            case 0xB2:  //RES 6, D
+                        RES(BIT_6, this->D);
+                        this->cycles += 8;
+                        break;
+
+            case 0xB3:  //RES 6, E
+                        RES(BIT_6, this->E);
+                        this->cycles += 8;
+                        break;
+
+            case 0xB4:  //RES 6, H
+                        RES(BIT_6, this->H);
+                        this->cycles += 8;
+                        break;
+
+            case 0xB5:  //RES 6, L
+                        RES(BIT_6, this->L);
+                        this->cycles += 8;
+                        break;
+
+            case 0xB6:  //RES 6, (HL)
+                        RES(BIT_6, (uint16_t)((this->H << 8) + this->L));
+                        this->cycles += 16;
+                        break;
+
+            case 0xB7:  //RES 6, A
+                        RES(BIT_6, this->A);
+                        this->cycles += 8;
+                        break;
+
+            case 0xB8:  //RES 7, B
+                        RES(BIT_7, this->B);
+                        this->cycles += 8;
+                        break;
+
+            case 0xB9:  //RES 7, C
+                        RES(BIT_7, this->C);
+                        this->cycles += 8;
+                        break;
+
+            case 0xBA:  //RES 7, D
+                        RES(BIT_7, this->D);
+                        this->cycles += 8;
+                        break;
+
+            case 0xBB:  //RES 7, E
+                        RES(BIT_7, this->E);
+                        this->cycles += 8;
+                        break;
+
+            case 0xBC:  //RES 7, H
+                        RES(BIT_7, this->H);
+                        this->cycles += 8;
+                        break;
+
+            case 0xBD:  //RES 7, L
+                        RES(BIT_7, this->L);
+                        this->cycles += 8;
+                        break;
+
+            case 0xBE:  //RES 7, (HL)
+                        RES(BIT_7, (uint16_t)((this->H << 8) + this->L));
+                        this->cycles += 16;
+                        break;
+
+            case 0xBF:  //RES 7, A
+                        RES(BIT_7, this->A);
+                        this->cycles += 8;
+                        break;
+
+            case 0xC0:  //SET 0, B
+                        SET(BIT_0, this->B);
+                        this->cycles += 8;
+                        break;
+
+            case 0xC1:  //SET 0, C
+                        SET(BIT_0, this->C);
+                        this->cycles += 8;
+                        break;
+
+            case 0xC2:  //SET 0, D
+                        SET(BIT_0, this->D);
+                        this->cycles += 8;
+                        break;
+
+            case 0xC3:  //SET 0, E
+                        SET(BIT_0, this->E);
+                        this->cycles += 8;
+                        break;
+
+            case 0xC4:  //SET 0, H
+                        SET(BIT_0, this->H);
+                        this->cycles += 8;
+                        break;
+
+            case 0xC5:  //SET 0, L
+                        SET(BIT_0, this->L);
+                        this->cycles += 8;
+                        break;
+
+            case 0xC6:  //SET 0, (HL)
+                        SET(BIT_0, (uint16_t)((this->H << 8) + this->L));
+                        this->cycles += 16;
+                        break;
+
+            case 0xC7:  //SET 0, A
+                        SET(BIT_0, this->A);
+                        this->cycles += 8;
+                        break;
+
+            case 0xC8:  //SET 1, B
+                        SET(BIT_1, this->B);
+                        this->cycles += 8;
+                        break;
+
+            case 0xC9:  //SET 1, C
+                        SET(BIT_1, this->C);
+                        this->cycles += 8;
+                        break;
+
+            case 0xCA:  //SET 1, D
+                        SET(BIT_1, this->D);
+                        this->cycles += 8;
+                        break;
+
+            case 0xCB:  //SET 1, E
+                        SET(BIT_1, this->E);
+                        this->cycles += 8;
+                        break;
+
+            case 0xCC:  //SET 1, H
+                        SET(BIT_1, this->H);
+                        this->cycles += 8;
+                        break;
+
+            case 0xCD:  //SET 1, L
+                        SET(BIT_1, this->L);
+                        this->cycles += 8;
+                        break;
+
+            case 0xCE:  //SET 1, (HL)
+                        SET(BIT_1, (uint16_t)((this->H << 8) + this->L));
+                        this->cycles += 16;
+                        break;
+
+            case 0xCF:  //SET 1, A
+                        SET(BIT_1, this->A);
+                        this->cycles += 8;
+                        break;
+                        
+            case 0xD0:  //SET 2, B
+                        SET(BIT_2, this->B);
+                        this->cycles += 8;
+                        break;
+
+            case 0xD1:  //SET 2, C
+                        SET(BIT_2, this->C);
+                        this->cycles += 8;
+                        break;
+
+            case 0xD2:  //SET 2, D
+                        SET(BIT_2, this->D);
+                        this->cycles += 8;
+                        break;
+
+            case 0xD3:  //SET 2, E
+                        SET(BIT_2, this->E);
+                        this->cycles += 8;
+                        break;
+
+            case 0xD4:  //SET 2, H
+                        SET(BIT_2, this->H);
+                        this->cycles += 8;
+                        break;
+
+            case 0xD5:  //SET 2, L
+                        SET(BIT_2, this->L);
+                        this->cycles += 8;
+                        break;
+
+            case 0xD6:  //SET 2, (HL)
+                        SET(BIT_2, (uint16_t)((this->H << 8) + this->L));
+                        this->cycles += 16;
+                        break;
+
+            case 0xD7:  //SET 2, A
+                        SET(BIT_2, this->A);
+                        this->cycles += 8;
+                        break;
+
+            case 0xD8:  //SET 3, B
+                        SET(BIT_3, this->B);
+                        this->cycles += 8;
+                        break;
+
+            case 0xD9:  //SET 3, C
+                        SET(BIT_3, this->C);
+                        this->cycles += 8;
+                        break;
+
+            case 0xDA:  //SET 3, D
+                        SET(BIT_3, this->D);
+                        this->cycles += 8;
+                        break;
+
+            case 0xDB:  //SET 3, E
+                        SET(BIT_3, this->E);
+                        this->cycles += 8;
+                        break;
+
+            case 0xDC:  //SET 3, H
+                        SET(BIT_3, this->H);
+                        this->cycles += 8;
+                        break;
+
+            case 0xDD:  //SET 3, L
+                        SET(BIT_3, this->L);
+                        this->cycles += 8;
+                        break;
+
+            case 0xDE:  //SET 3, (HL)
+                        SET(BIT_3, (uint16_t)((this->H << 8) + this->L));
+                        this->cycles += 16;
+                        break;
+
+            case 0xDF:  //SET 3, A
+                        SET(BIT_3, this->A);
+                        this->cycles += 8;
+                        break;
+
+            case 0xE0:  //SET 4, B
+                        SET(BIT_4, this->B);
+                        this->cycles += 8;
+                        break;
+
+            case 0xE1:  //SET 4, C
+                        SET(BIT_4, this->C);
+                        this->cycles += 8;
+                        break;
+
+            case 0xE2:  //SET 4, D
+                        SET(BIT_4, this->D);
+                        this->cycles += 8;
+                        break;
+
+            case 0xE3:  //SET 4, E
+                        SET(BIT_4, this->E);
+                        this->cycles += 8;
+                        break;
+
+            case 0xE4:  //SET 4, H
+                        SET(BIT_4, this->H);
+                        this->cycles += 8;
+                        break;
+
+            case 0xE5:  //SET 4, L
+                        SET(BIT_4, this->L);
+                        this->cycles += 8;
+                        break;
+
+            case 0xE6:  //SET 4, (HL)
+                        SET(BIT_4, (uint16_t)((this->H << 8) + this->L));
+                        this->cycles += 16;
+                        break;
+
+            case 0xE7:  //SET 4, A
+                        SET(BIT_4, this->A);
+                        this->cycles += 8;
+                        break;
+
+            case 0xE8:  //SET 5, B
+                        SET(BIT_5, this->B);
+                        this->cycles += 8;
+                        break;
+
+            case 0xE9:  //SET 5, C
+                        SET(BIT_5, this->C);
+                        this->cycles += 8;
+                        break;
+
+            case 0xEA:  //SET 5, D
+                        SET(BIT_5, this->D);
+                        this->cycles += 8;
+                        break;
+
+            case 0xEB:  //SET 5, E
+                        SET(BIT_5, this->E);
+                        this->cycles += 8;
+                        break;
+
+            case 0xEC:  //SET 5, H
+                        SET(BIT_5, this->H);
+                        this->cycles += 8;
+                        break;
+
+            case 0xED:  //SET 5, L
+                        SET(BIT_5, this->L);
+                        this->cycles += 8;
+                        break;
+
+            case 0xEE:  //SET 5, (HL)
+                        SET(BIT_5, (uint16_t)((this->H << 8) + this->L));
+                        this->cycles += 16;
+                        break;
+
+            case 0xEF:  //SET 5, A
+                        SET(BIT_5, this->A);
+                        this->cycles += 8;
+                        break;
+                        
+            case 0xF0:  //SET 6, B
+                        SET(BIT_6, this->B);
+                        this->cycles += 8;
+                        break;
+
+            case 0xF1:  //SET 6, C
+                        SET(BIT_6, this->C);
+                        this->cycles += 8;
+                        break;
+
+            case 0xF2:  //SET 6, D
+                        SET(BIT_6, this->D);
+                        this->cycles += 8;
+                        break;
+
+            case 0xF3:  //SET 6, E
+                        SET(BIT_6, this->E);
+                        this->cycles += 8;
+                        break;
+
+            case 0xF4:  //SET 6, H
+                        SET(BIT_6, this->H);
+                        this->cycles += 8;
+                        break;
+
+            case 0xF5:  //SET 6, L
+                        SET(BIT_6, this->L);
+                        this->cycles += 8;
+                        break;
+
+            case 0xF6:  //SET 6, (HL)
+                        SET(BIT_6, (uint16_t)((this->H << 8) + this->L));
+                        this->cycles += 16;
+                        break;
+
+            case 0xF7:  //SET 6, A
+                        SET(BIT_6, this->A);
+                        this->cycles += 8;
+                        break;
+
+            case 0xF8:  //SET 7, B
+                        SET(BIT_7, this->B);
+                        this->cycles += 8;
+                        break;
+
+            case 0xF9:  //SET 7, C
+                        SET(BIT_7, this->C);
+                        this->cycles += 8;
+                        break;
+
+            case 0xFA:  //SET 7, D
+                        SET(BIT_7, this->D);
+                        this->cycles += 8;
+                        break;
+
+            case 0xFB:  //SET 7, E
+                        SET(BIT_7, this->E);
+                        this->cycles += 8;
+                        break;
+
+            case 0xFC:  //SET 7, H
+                        SET(BIT_7, this->H);
+                        this->cycles += 8;
+                        break;
+
+            case 0xFD:  //SET 7, L
+                        SET(BIT_7, this->L);
+                        this->cycles += 8;
+                        break;
+
+            case 0xFE:  //SET 7, (HL)
+                        SET(BIT_7, (uint16_t)((this->H << 8) + this->L));
+                        this->cycles += 16;
+                        break;
+
+            case 0xFF:  //SET 7, A
+                        SET(BIT_7, this->A);
+                        this->cycles += 8;
+                        break;
 
             default: //ILLEGAL OPCODE
                     throw std::runtime_error("ILLEGAL CB OPCODE");
