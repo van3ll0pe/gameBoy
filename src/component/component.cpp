@@ -10,10 +10,7 @@ namespace GB
     }
 
     Component::~Component()
-    {
-        if (this->bus != nullptr)
-            delete this->bus;
-    }
+    { }
 
     bool
     Component::connectBus(Bus* bus)

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+
+wc -l src/cpu/*.cpp	\
+	src/component/*.cpp	\
+	src/bus/*.cpp	\
+	include/*.hpp
