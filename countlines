@@ -4,4 +4,7 @@
 wc -l src/cpu/*.cpp	\
 	src/component/*.cpp	\
 	src/bus/*.cpp	\
+	src/gameboy/*.cpp	\
+	src/joypad/*.cpp	\
+	src/main.cpp	\
 	include/*.hpp

@@ -5,33 +5,27 @@ namespace GB
 {
     Component::Component()
     {
-        this->connected = false;
         this->bus = nullptr;
     }
 
     Component::~Component()
     { }
 
-    bool
+    void
     Component::connectBus(Bus* bus)
     {
-        if (bus == nullptr) {
-            this->connected = false;
-            throw new std::runtime_error("[Error] - Component failed to connect the bus\n");
-        }
-        else {
+        if (bus == nullptr)
+            throw std::runtime_error("[Error] - Component failed to connect the bus (bus given is not existing)\n");
+
+        else
             this->bus = bus;
-            this->connected = true;
-        }
-        
-        return this->connected;
     }
 
     uint8_t
     Component::read(uint16_t addr)
     {
-        if (!(this->connected))
-            throw new std::runtime_error("[Error] - Component not connected to the bus (to read in memory)\n");
+        if (!(this->bus))
+            throw std::runtime_error("[Error] - Component not connected to the bus (to read in memory)\n");
         
         return this->bus->read(addr);
     }
@@ -39,8 +33,8 @@ namespace GB
     void
     Component::write(uint16_t addr, uint8_t data)
     {
-        if (!(this->connected))
-            throw new std::runtime_error("[Error] - Component not connected to the bus (to write in memory)\n");
+        if (!(this->bus))
+            throw std::runtime_error("[Error] - Component not connected to the bus (to write in memory)\n");
         
         this->bus->write(addr, data);
     }

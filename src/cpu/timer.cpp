@@ -2,5 +2,8 @@
 
 namespace GB
 {
-    
+    Joypad::Joypad()
+    {
+        
+    }
 }

@@ -17,64 +17,6 @@ namespace GB
 
         this->cycles = 0;
         this->IME = 0;
-
-        //value in hard registers
-        write(HR_P1, 0xCF);
-        write(HR_SB, 0x00);
-        write(HR_SC, 0x7E);
-        write(HR_DIV, 0xAB);
-        write(HR_TIMA, 0x00);
-        write(HR_TMA, 0x00);
-        write(HR_TAC, 0xF8);
-        write(HR_IF, 0xE1);
-        write(HR_NR10, 0x80);
-        write(HR_NR11, 0xBF);
-        write(HR_NR12, 0xF3);
-        write(HR_NR13, 0xFF);
-        write(HR_NR14, 0xBF);
-        write(HR_NR21, 0x3F);
-        write(HR_NR22, 0x00);
-        write(HR_NR23, 0xFF);
-        write(HR_NR24, 0xBF);
-        write(HR_NR30, 0x7F);
-        write(HR_NR31, 0xFF);
-        write(HR_NR32, 0x9F);
-        write(HR_NR33, 0xFF);
-        write(HR_NR34, 0xBF);
-        write(HR_NR41, 0xFF);
-        write(HR_NR42, 0x00);
-        write(HR_NR43, 0x00);
-        write(HR_NR44, 0xBF);
-        write(HR_NR50, 0x77);
-        write(HR_NR51, 0xF3);
-        write(HR_NR52, 0xF1);
-        write(HR_LCDC, 0x91);
-        write(HR_STAT, 0x85);
-        write(HR_SCY, 0x00);
-        write(HR_SCX, 0x00);
-        write(HR_LY, 0x00);
-        write(HR_LYC, 0x00);
-        write(HR_DMA, 0xFF);
-        write(HR_BGP, 0xFC);
-        write(HR_OBP0, 0x00);
-        write(HR_OBP1, 0x00);
-        write(HR_WY, 0x00);
-        write(HR_WX, 0x00);
-        write(HR_KEY1, 0xFF);
-        write(HR_VBK, 0xFF);
-        write(HR_HDMA1, 0xFF);
-        write(HR_HDMA2, 0xFF);
-        write(HR_HDMA3, 0xFF);
-        write(HR_HDMA4, 0xFF);
-        write(HR_HDMA5, 0xFF);
-        write(HR_RP, 0xFF);
-        write(HR_BCPS, 0xFF);
-        write(HR_BCPD, 0xFF);
-        write(HR_OCPS, 0xFF);
-        write(HR_OCPD, 0xFF);
-        write(HR_SVBK, 0xFF);
-        write(HR_IE, 0x00);
-
     }
 
     Cpu::~Cpu() {}

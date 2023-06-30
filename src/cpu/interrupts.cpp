@@ -6,7 +6,7 @@ namespace GB
     void
     Cpu::handle_interrupt()
     {
-        if (this->IME == 0) return;
+        if (this->IME == 0) return; //no need to check the request because IME is false
 
         //IME SET
         uint8_t enable_interrupts = read(HR_IE);
@@ -20,6 +20,7 @@ namespace GB
             request_interrupts &= (~BIT_VBLANK);
             write(HR_IF, request_interrupts);
             this->IME = 0;
+            this->cycles = 5;
         }
         //CHECK LCD PRIORITY TWO
         else if ((request_interrupts & BIT_LCD) && (enable_interrupts & BIT_LCD))
@@ -28,6 +29,7 @@ namespace GB
             request_interrupts &= (~BIT_LCD);
             write(HR_IF, request_interrupts);
             this->IME = 0;
+            this->cycles = 5;
         }
         //CHECK TIMER PRIORITY THREE
         else if ((request_interrupts & BIT_TIMER) && (enable_interrupts & BIT_TIMER))
@@ -36,6 +38,7 @@ namespace GB
             request_interrupts &= (~BIT_TIMER);
             write(HR_IF, request_interrupts);
             this->IME = 0;
+            this->cycles = 5;
         }
         //CHECK SERIAL PRIORITY FOUR
         else if ((request_interrupts & BIT_SERIAL) && (enable_interrupts & BIT_SERIAL))
@@ -44,6 +47,7 @@ namespace GB
             request_interrupts &= (~BIT_SERIAL);
             write(HR_IF, request_interrupts);
             this->IME = 0;
+            this->cycles = 5;
         }
         //CHECK JOYPAD PRIORITY FIVE
         else if ((request_interrupts & BIT_JOYPAD) && (enable_interrupts & BIT_JOYPAD))
@@ -52,7 +56,7 @@ namespace GB
             request_interrupts &= (~BIT_JOYPAD);
             write(HR_IF, request_interrupts);
             this->IME = 0;
+            this->cycles = 5;
         }
-
     }
 }
