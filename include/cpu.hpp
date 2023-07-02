@@ -7,20 +7,8 @@
 #include <array>
 
 #include "component.hpp"
+#include "interrupts.hpp"
 
-//##### INTERRUPTS ADDRESS and INTERRUPTS BIT corresponding in IE and IF
-#define BIT_VBLANK  0b00000001
-#define BIT_LCD     0b00000010
-#define BIT_TIMER   0b00000100
-#define BIT_SERIAL  0b00001000
-#define BIT_JOYPAD  0b00010000
-
-
-#define INTERRUPT_VBLANK  0x0040
-#define INTERRUPT_LCD     0x0048
-#define INTERRUPT_TIMER   0x0050
-#define INTERRUPT_SERIAL  0x0058
-#define INTERRUPT_JOYPAD  0x0060
 
 //##### BIT CORRESPONDING FLAGS in F register
 #define ZERO_FLAG           0b10000000
@@ -45,6 +33,9 @@
 #define CONDITION_NC  (get_flag(CARRY_FLAG) == 0)
 
 
+
+
+
 namespace GB
 {
     class Cpu : public Component
@@ -52,7 +43,7 @@ namespace GB
         public:
             Cpu();
             ~Cpu();
-            //run();
+            void run();
 
         private:
             //##### REGISTERS #####
@@ -74,8 +65,14 @@ namespace GB
 
             uint8_t cycles;
 
+            //##### DEBUG INFO CPU #####
+            void display_registers();
+
             //##### interruptions ######
-            void handle_interrupt();
+            void handle_interrupt(); //check interruptions enabled and requested and call to the address
+
+            //##### TIMER #####
+            void handle_timer();
         
             //##### FLAGS #####
             void set_flag(uint8_t flag);                    //put 1 to the given flag

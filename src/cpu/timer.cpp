@@ -2,8 +2,9 @@
 
 namespace GB
 {
-    Joypad::Joypad()
-    {
-        
-    }
+   void
+   Cpu::handle_timer()
+   {
+    
+   }
 }

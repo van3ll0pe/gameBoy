@@ -17,7 +17,8 @@ namespace GB
         public:
             GameBoy();
             ~GameBoy();
-            //void start();
+            void run();
+            void load_cartridge();
             
     };
 

@@ -17,6 +17,7 @@ namespace GB
             void connectBus(Bus* bus);
             uint8_t read(uint16_t addr);
             void write(uint16_t addr, uint8_t data);
+            virtual void run() =0;
 
         protected:
             Bus* bus;

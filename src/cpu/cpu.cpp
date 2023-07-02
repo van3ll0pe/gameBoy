@@ -1,5 +1,6 @@
 #include "cpu.hpp"
 #include <stdexcept>
+#include <iostream>
 namespace GB
 {
     Cpu::Cpu(): Component()
@@ -22,15 +23,33 @@ namespace GB
     Cpu::~Cpu() {}
 
     void
+    Cpu::run()
+    {
+        if (this->halted) return;
+
+        fetch_opcode();
+
+        execute_opcode();
+
+        #ifdef DEBUG_INFO_CPU
+            display_registers();
+            printf("\n");
+        #endif//DEBUG_INFO_CPU
+        handle_interrupt();
+    }
+
+    void
     Cpu::fetch_opcode()
     {
+        #ifdef DEBUG_INFO_CPU
+            printf("ADDRESS %04X : [opcode] %02X\n", this->PC, read(this->PC));
+        #endif //DEBUG_INFO_CPU
         this->opcode = read(this->PC++);
     }
 
     void
     Cpu::execute_opcode()
     {
-        fetch_opcode();
 
         switch(this->opcode)
         {   
@@ -1056,6 +1075,7 @@ namespace GB
 
             case 0xCB:  //PREFIX CB
                         this->cycles = 4;
+                        fetch_opcode();
                         execute_opcode_CB();
                         break;
 
@@ -1273,7 +1293,6 @@ namespace GB
     void
     Cpu::execute_opcode_CB()
     {
-        fetch_opcode();
 
         switch(this->opcode)
         {

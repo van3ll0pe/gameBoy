@@ -5,8 +5,10 @@
 int
 main()
 {
+
+    GB::GameBoy* gameboy;
     try {
-        GB::GameBoy gameboy {};
+        gameboy = new GB::GameBoy();
 
     }
     catch(std::runtime_error e)
@@ -14,7 +16,11 @@ main()
         return 1;
     }
 
-    std::cout << "everything is ok !" << std::endl;
+    std::cout << "STARTED WITH NO FAILURE" << std::endl;
+    gameboy->load_cartridge();
+    gameboy->run();
+
+
 
     return 0;
 }

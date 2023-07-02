@@ -2,7 +2,10 @@ cmake_minimum_required(VERSION 3.0)
 
 project(GAMEBOY CXX)
 
+
 include_directories(${CMAKE_SOURCE_DIR}/include)
+
+add_definitions(-DDEBUG_INFO_CPU)
 
 set(FLAGS "-g -Wall")
 set(SRC_cpu src/cpu/addressing_mode.cpp
@@ -17,7 +20,8 @@ set(SRC_cpu src/cpu/addressing_mode.cpp
                 src/cpu/opcode_load_8b.cpp
                 src/cpu/opcode_load_16b.cpp
                 src/cpu/opcode_rotate.cpp
-                src/cpu/stack.cpp)
+                src/cpu/stack.cpp
+                src/cpu/debug.cpp)
 
 set(SRC_bus src/bus/bus.cpp)
 set(SRC_component src/component/component.cpp)
