@@ -1,14 +1,15 @@
 #include <iostream>
 #include "gameboy.hpp"
 #include <stdexcept>
+#include <memory>
 
 int
 main()
 {
 
-    GB::GameBoy* gameboy;
+    std::unique_ptr<GB::GameBoy> gameboy;
     try {
-        gameboy = new GB::GameBoy();
+        gameboy = std::make_unique<GB::GameBoy>();
 
     }
     catch(std::runtime_error e)

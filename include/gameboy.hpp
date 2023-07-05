@@ -2,6 +2,8 @@
 #ifndef __GAME_BOY__
 #define __GAME_BOY__
 
+#include <memory>
+
 #include "bus.hpp"
 #include "component.hpp"
 #include "cpu.hpp"
@@ -12,7 +14,7 @@ namespace GB
     {
         private:
             Bus bus {};
-            Component*  cpu;
+            std::unique_ptr<Component> cpu;
         
         public:
             GameBoy();
