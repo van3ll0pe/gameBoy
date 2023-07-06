@@ -43,11 +43,10 @@ namespace GB
     GameBoy::load_cartridge()
     {
         uint16_t starting_address = 0x0100;
+        this->bus.write(starting_address++, 0xC6);
         this->bus.write(starting_address++, 0x01);
-        this->bus.write(starting_address++, 0xAA);
-        this->bus.write(starting_address++, 0xFF);
-        this->bus.write(starting_address++, 0x3E);
-        this->bus.write(starting_address++, 0xF0);
-        this->bus.write(starting_address++, 0x80);
+        this->bus.write(starting_address++, 0xC3);
+        this->bus.write(starting_address++, 0x00);
+        this->bus.write(starting_address++, 0x01);
     }
 }

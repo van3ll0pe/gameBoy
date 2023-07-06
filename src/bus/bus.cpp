@@ -74,10 +74,7 @@ namespace GB
 
     void
     Bus::write(uint16_t addr, uint8_t data)
-    {
-        if (addr == HR_DIV) //if the address is the DIV hard register, we put a 0, not the data, because writing in it reset the div clock count
-            this->memory[addr] = 0x00;
-        
+    {        
         this->memory[addr] = data;
     }
 }

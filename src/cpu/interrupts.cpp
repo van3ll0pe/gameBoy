@@ -19,8 +19,7 @@ namespace GB
         if ((request_interrupts & BIT_VBLANK) && (enable_interrupts & BIT_VBLANK))
         {
             CALL(INTERRUPT_VBLANK);
-            request_interrupts &= (~BIT_VBLANK);
-            write(HR_IF, request_interrupts); //clear the bit VBLANK in the request interrupts
+            write(HR_IF, request_interrupts & (~BIT_VBLANK)); //clear the bit VBLANK in the request interrupts
             this->IME = 0;
             this->cycles = 5;
         }
@@ -28,8 +27,7 @@ namespace GB
         else if ((request_interrupts & BIT_LCD) && (enable_interrupts & BIT_LCD))
         {
             CALL(INTERRUPT_LCD);
-            request_interrupts &= (~BIT_LCD);
-            write(HR_IF, request_interrupts); //clear the bit VBLANK in the request interrupts
+            write(HR_IF, request_interrupts & (~BIT_LCD)); //clear the bit VBLANK in the request interrupts
             this->IME = 0;
             this->cycles = 5;
         }
@@ -37,8 +35,7 @@ namespace GB
         else if ((request_interrupts & BIT_TIMER) && (enable_interrupts & BIT_TIMER))
         {
             CALL(INTERRUPT_TIMER);
-            request_interrupts &= (~BIT_TIMER);
-            write(HR_IF, request_interrupts); //clear the bit VBLANK in the request interrupts
+            write(HR_IF, request_interrupts & (~BIT_TIMER)); //clear the bit VBLANK in the request interrupts
             this->IME = 0;
             this->cycles = 5;
         }
@@ -46,8 +43,7 @@ namespace GB
         else if ((request_interrupts & BIT_SERIAL) && (enable_interrupts & BIT_SERIAL))
         {
             CALL(INTERRUPT_SERIAL);
-            request_interrupts &= (~BIT_SERIAL);
-            write(HR_IF, request_interrupts); //clear the bit VBLANK in the request interrupts
+            write(HR_IF, request_interrupts & (~BIT_SERIAL)); //clear the bit VBLANK in the request interrupts
             this->IME = 0;
             this->cycles = 5;
         }
@@ -55,8 +51,7 @@ namespace GB
         else if ((request_interrupts & BIT_JOYPAD) && (enable_interrupts & BIT_JOYPAD))
         {
             CALL(INTERRUPT_JOYPAD);
-            request_interrupts &= (~BIT_JOYPAD);
-            write(HR_IF, request_interrupts); //clear the bit VBLANK in the request interrupts
+            write(HR_IF, request_interrupts & (~BIT_JOYPAD)); //clear the bit VBLANK in the request interrupts
             this->IME = 0;
             this->cycles = 5;
         }
