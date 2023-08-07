@@ -3,26 +3,18 @@
 #define __JOYPAD_HPP
 
 #include "component.hpp"
+#include <SDL2/SDL.h>
 
 namespace GB
 {
     class Joypad : public Component
     {
+        private:
+            uint8_t* keyboard;
         public:
             Joypad();
             ~Joypad();
-            void getInput();
-            void updateInput();
-        
-        private:
-            bool button_A;          //if pressed -> true
-            bool button_B;          //if pressed -> true
-            bool button_arrow_up;   //if pressed -> true
-            bool button_arrow_down; //if pressed -> true
-            bool button_arrow_left; //if pressed -> true
-            bool button_arrow_right;    //if pressed -> true
-            bool button_select;         //if pressed -> true
-            bool button_start;          //if pressed -> true
+            void handle_input();
     };
 }
 

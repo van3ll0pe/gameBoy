@@ -5,13 +5,14 @@ project(GAMEBOY CXX)
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
-add_definitions(-DDEBUG_INFO_CPU)
+#add_definitions(-DDEBUG_INFO_CPU)
 
 set(FLAGS "-g -Wall")
 set(SRC_cpu src/cpu/addressing_mode.cpp
                 src/cpu/cpu.cpp
                 src/cpu/flags.cpp
                 src/cpu/interrupts.cpp
+                src/cpu/timer.cpp
                 src/cpu/opcode_arithmetic_8b.cpp
                 src/cpu/opcode_arithmetic_16b.cpp
                 src/cpu/opcode_bit.cpp

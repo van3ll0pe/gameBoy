@@ -43,7 +43,6 @@ namespace GB
         public:
             Cpu();
             ~Cpu();
-            void run();
 
         private:
             //##### REGISTERS #####
@@ -65,15 +64,20 @@ namespace GB
 
             uint8_t cycles;
 
+        public:
+            uint8_t get_cycles();
+            bool is_halted();
+
             //##### DEBUG INFO CPU #####
             void display_registers();
 
             //##### interruptions ######
+        
             void handle_interrupt(); //check interruptions enabled and requested and call to the address
 
             //##### TIMER #####
             void handle_timer();
-        
+        private:
             //##### FLAGS #####
             void set_flag(uint8_t flag);                    //put 1 to the given flag
             void clear_flag(uint8_t flag);                  //put 0 to the given flag
@@ -87,9 +91,12 @@ namespace GB
             uint16_t pull_16b();
 
             uint8_t opcode;
+        
+        public:
             void fetch_opcode();
             void execute_opcode();
-            void execute_opcode_CB();
+        private:
+            void execute_opcode_CB(); //called from execute_opcode
 
             //##### ADDRESSING MODE #####
             uint8_t IMMEDIATE_8b(); //get the immediate value at PC address

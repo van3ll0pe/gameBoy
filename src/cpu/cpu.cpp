@@ -18,24 +18,22 @@ namespace GB
 
         this->cycles = 0;
         this->IME = 0;
+        this->stopped = 0;
+        this->halted = 0;
     }
 
     Cpu::~Cpu() {}
 
-    void
-    Cpu::run()
+    uint8_t
+    Cpu::get_cycles()
     {
-        if (this->halted) return;
+        return this->cycles;
+    }
 
-        fetch_opcode();
-
-        execute_opcode();
-
-        #ifdef DEBUG_INFO_CPU
-            display_registers();
-            printf("\n");
-        #endif//DEBUG_INFO_CPU
-        handle_interrupt();
+    bool
+    Cpu::is_halted()
+    {
+       return (halted) ? true : false;
     }
 
     void

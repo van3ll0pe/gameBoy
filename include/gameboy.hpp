@@ -5,7 +5,6 @@
 #include <memory>
 
 #include "bus.hpp"
-#include "component.hpp"
 #include "cpu.hpp"
 
 namespace GB
@@ -14,7 +13,7 @@ namespace GB
     {
         private:
             Bus bus {};
-            std::unique_ptr<Component> cpu;
+            Cpu cpu {};
         
         public:
             GameBoy();

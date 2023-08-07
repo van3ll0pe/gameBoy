@@ -3,9 +3,15 @@
 #include <stdexcept>
 #include <memory>
 
+#include <SDL2/SDL.h>
+
 int
 main()
-{
+{   
+    //INITIALIZATION OF SDL
+    if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
+        return 1;
+
 
     std::unique_ptr<GB::GameBoy> gameboy;
     try {
@@ -22,6 +28,7 @@ main()
     gameboy->run();
 
 
+    SDL_Quit();
 
     return 0;
 }
