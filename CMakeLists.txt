@@ -5,9 +5,13 @@ project(GAMEBOY CXX)
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
-#add_definitions(-DDEBUG_INFO_CPU)
 
-set(FLAGS "-g -Wall")
+add_definitions(-DDEBUG_INFO_CPU)
+
+find_package(SDL2 REQUIRED)
+include_directories(${SDL2_INCLUDE_DIRS})
+
+set(FLAGS "-g -Wall -Werror -Wextra")
 set(SRC_cpu src/cpu/addressing_mode.cpp
                 src/cpu/cpu.cpp
                 src/cpu/flags.cpp
@@ -27,5 +31,7 @@ set(SRC_cpu src/cpu/addressing_mode.cpp
 set(SRC_bus src/bus/bus.cpp)
 set(SRC_component src/component/component.cpp)
 set(SRC_gameboy src/gameboy/gameboy.cpp)
+set(SRC_ppu src/ppu/ppu.cpp)
 
-add_executable(GameBoy src/main.cpp ${SRC_cpu} ${SRC_bus} ${SRC_component} ${SRC_gameboy})
+add_executable(GameBoy src/main.cpp ${SRC_cpu} ${SRC_bus} ${SRC_component} ${SRC_gameboy} ${SRC_ppu})
+target_link_libraries(GameBoy ${SDL2_LIBRARIES})

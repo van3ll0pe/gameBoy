@@ -20,6 +20,7 @@ namespace GB
         this->IME = 0;
         this->stopped = 0;
         this->halted = 0;
+        this->opcode = 0;
     }
 
     Cpu::~Cpu() {}
@@ -43,6 +44,12 @@ namespace GB
             printf("ADDRESS %04X : [opcode] %02X\n", this->PC, read(this->PC));
         #endif //DEBUG_INFO_CPU
         this->opcode = read(this->PC++);
+    }
+
+    uint8_t
+    Cpu::get_opcode()
+    {
+        return this->opcode;
     }
 
     void

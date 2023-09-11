@@ -67,7 +67,7 @@ namespace GB
         public:
             uint8_t get_cycles();
             bool is_halted();
-
+            uint8_t get_opcode();
             //##### DEBUG INFO CPU #####
             void display_registers();
 
@@ -89,7 +89,7 @@ namespace GB
             void push_16b(uint16_t data);
             uint8_t pull_8b();
             uint16_t pull_16b();
-
+        public:
             uint8_t opcode;
         
         public:

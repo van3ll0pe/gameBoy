@@ -6,6 +6,7 @@
 
 #include "bus.hpp"
 #include "cpu.hpp"
+#include "ppu.hpp"
 
 namespace GB
 {
@@ -14,10 +15,15 @@ namespace GB
         private:
             Bus bus {};
             Cpu cpu {};
+            //Joypad joypad {};
+            Ppu ppu {};
+
+            bool is_open;
         
         public:
             GameBoy();
             ~GameBoy();
+            void connect();
             void run();
             void load_cartridge();
             

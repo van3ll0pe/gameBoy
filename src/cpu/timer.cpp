@@ -12,7 +12,7 @@ namespace GB
       //DIVISION TIMER
       static int divider_clock = 0;
       divider_clock += this->cycles;
-      if (divider_clock > 0x100)
+      if (divider_clock > 0xFF)
       {
          divider_clock = 0;
          write(HR_DIV, read(HR_DIV) + 1);

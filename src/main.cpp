@@ -6,17 +6,12 @@
 #include <SDL2/SDL.h>
 
 int
-main()
+main(int argc, char** argv)
 {   
-    //INITIALIZATION OF SDL
-    if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
-        return 1;
+    GB::GameBoy gameboy {};
 
-
-    std::unique_ptr<GB::GameBoy> gameboy;
     try {
-        gameboy = std::make_unique<GB::GameBoy>();
-
+        gameboy.connect();
     }
     catch(std::runtime_error e)
     {
@@ -24,11 +19,10 @@ main()
     }
 
     std::cout << "STARTED WITH NO FAILURE" << std::endl;
-    gameboy->load_cartridge();
-    gameboy->run();
-
-
-    SDL_Quit();
+    gameboy.load_cartridge();
+    gameboy.run();
 
     return 0;
+
+    
 }
